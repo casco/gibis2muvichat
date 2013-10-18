@@ -1,0 +1,15 @@
+#gibis2muvichat is a programming exercise that attempts to emulate gIBIS using the codebase from MuViChat
+
+= Introduction =
+
+Add your content here.
+
+gibis2muvichat is a programming exercise that attempts to emulate gIBIS using the codebase from MuViChat
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages

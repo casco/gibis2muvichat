@@ -7,7 +7,6 @@ import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.ConvolveOp;
 import javax.swing.*;
 
 public class ChatInspectorWindow {
@@ -35,11 +34,11 @@ public class ChatInspectorWindow {
 
 
         inspectorTextLabel = new JTextArea("Wait until a message arrives");
-        inspectorTextLabel.setMinimumSize(new Dimension(200,300));
+        inspectorTextLabel.setPreferredSize(new Dimension(500, 400));
 
 
         indexLabel = new JLabel("0");
-        indexLabel.setMinimumSize(new Dimension(50,30));
+        indexLabel.setPreferredSize(new Dimension(50, 30));
 
         sizeLabel = new JLabel("de 0");
 
@@ -114,9 +113,9 @@ public class ChatInspectorWindow {
     }
 
     public void open() {
+        frame.pack();
         frame.setVisible(true);
     }
-
 
 }
 

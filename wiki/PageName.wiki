@@ -4,6 +4,13 @@
 
 Add your content here.
 
+= Miembros =
+  * PabloSantana
+  * GermanAquino
+  * AugustoVillaMonte
+  * FrancoRonchetti
+  
+
 gibis2muvichat is a programming exercise that attempts to emulate gIBIS using the codebase from MuViChat
 
 

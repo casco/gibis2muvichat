@@ -103,15 +103,15 @@ public class ChatTextInputPane extends JPanel implements Observer {
 				public void keyTyped(java.awt.event.KeyEvent e) {
 					
 					   if(e.getKeyChar()=='\n') { // RETURN/ENTER
-                           //TODO: Acá me di cuenta de que apretó enter y envia el mensaje.
+                           //TODO: Acá me di cuenta de que apretó enter y envía el mensaje.
 
 						    String text = chatTextArea.getText();
 						    // remove the \n
 						    text = text.replaceAll("\n","");
 					    
 						    if (!text.equals("")){// dont send empty messages
-                                //TODO Acá envía el mensaje!! Probablemente tenga que enviar mas parametros.
 
+                                //TODO Acá envía el mensaje!! Armo un diccionario con las propiedades adicionales.
                                 HashMap<String, String> properties = buildPropertyMap();
 
 								chatroom.sendThreadedMessage(text, properties);
@@ -145,6 +145,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
      * @return a HashMap of propertyName, value pairs (all Strings)
      */
     private HashMap<String, String> buildPropertyMap() {
+        //TODO: Aquí se agregan las propiedades relativas al tipo de mensaje y tipo de relación con el padre
         HashMap<String, String> properties = new HashMap<String, String>();
         if (typesCombo.getSelectedItem() != null) {
             properties.put("ibis-type", (String) typesCombo.getSelectedItem());

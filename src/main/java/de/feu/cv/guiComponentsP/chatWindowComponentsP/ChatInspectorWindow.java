@@ -23,8 +23,6 @@ public class ChatInspectorWindow {
 
 
     public ChatInspectorWindow(Conversation conversation) {
-        //TODO Resolver el problema de la ventana con tamaño cero
-
 
         this.conversation = conversation;
 

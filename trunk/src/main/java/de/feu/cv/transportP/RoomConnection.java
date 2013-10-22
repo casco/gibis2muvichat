@@ -1,9 +1,8 @@
 package de.feu.cv.transportP;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Observable;
+import java.util.*;
 
+import com.sun.istack.internal.Nullable;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -167,53 +166,69 @@ public class RoomConnection extends Observable{
 			}
 		}		
 	}
-	/**
-	 * Sends the given text to chat room.
-	 * @param text
-	 * @throws Exception 
-	 */
-	public void sendMessage(String text) throws Exception {
-		sendThreadedMessage(text,null);
-	}
+
+
+
 	/**
 	 * Sends the given text to chatroom and references.
 	 * a previous message
 	 * @param text the text so send
 	 * @param tm the referenced message
+     * @param additionalProperties is a HashMap of property/value pairs to set in the message before sending it
 	 * @throws Exception 
 	 */
-	public void sendThreadedMessage(String text,ThreadedMessage tm) throws Exception{
-		Message message = new Message(muc.getRoom(),Message.Type.GROUP_CHAT);
-		message.setBody(text);
-		// generate ID with timestamp
-		// uncommended because it needs iq packages to get server time
-		// message.setPacketID(getUniqueID());
+	public void sendThreadedMessage(String text,ThreadedMessage tm, @Nullable HashMap<String, String> additionalProperties) throws Exception{
+        HashMap<String, String> properties = new HashMap<String, String>();
 		if (tm != null){
 			String parent_nick = tm.getNick();
 			String parent_id = tm.getID();
+            properties.put("parent_nick", parent_nick);
+            properties.put("parent_id", parent_id);
+        }
 
-			
-			if (parent_id != null){
-				
-				message.setProperty("parent_nick", parent_nick);
-				message.setProperty("parent_id", parent_id);
+        if(additionalProperties != null) {
+            properties.putAll(additionalProperties);
+        }
 
-                //TODO setear otras propiedades que nos interese setear / tal vez necesitemos recibirlas
-                //como parametros a este método.
-
-			}
-		}	
-		try {
-			muc.sendMessage(message);
-			//groupchat.sendMessage(message);
-		} catch (XMPPException e) {
-			throw new Exception(ErrorTextGenerator.getErrorText(e));
-		}			
+        sendMessage(text, properties);
 	}
-	
 
 
-	/**
+    /**
+     * Sends the given text to chat room.
+     * @param text
+     * @throws Exception
+     */
+    public void sendMessage(String text) throws Exception {
+        sendMessage(text,null);
+    }
+
+    /**
+     * Sends the given text to chatroom
+     * a previous message
+     *
+     * @param text       the text so send
+     * @param properties is a HashMap of property/value pairs to set in the message before sending it
+     * @throws Exception
+     */
+    public void sendMessage(String text, @Nullable HashMap<String, String> properties) throws Exception {
+        Message message = new Message(muc.getRoom(), Message.Type.GROUP_CHAT);
+        message.setBody(text);
+        if (properties != null) {
+            for (Map.Entry<String, String> entry : properties.entrySet()) {
+                message.setProperty(entry.getKey(), entry.getValue());
+            }
+        }
+        try {
+            muc.sendMessage(message);
+
+        } catch (XMPPException e) {
+            throw new Exception(ErrorTextGenerator.getErrorText(e));
+        }
+    }
+
+
+    /**
 	 * Leaves the chatroom.
 	 */
 	public void leave(){

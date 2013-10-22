@@ -1,6 +1,7 @@
 package de.feu.cv.applicationLogicP.chatRoomP;
 
 import java.io.File;
+import java.util.HashMap;
 
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.TreeMLWriter;
@@ -140,18 +141,19 @@ public class ChatRoom {
 	 * Sends a message. If a parent message is selected,
 	 * it also sends the reference to that parent message.
 	 * @param text the text to send
+     * @param properties is a map of key/value pairs of Strings to add as properties to the message
 	 */
-	public void sendThreadedMessage(String text) {
+	public void sendThreadedMessage(String text, HashMap<String, String> properties) {
 		ThreadedMessage parent = conversation.getSelection();
 		if (parent==null)
 			try {
-				roomconnection.sendMessage(text);
+				roomconnection.sendMessage(text, properties);
 			} catch (Exception e) {
 				MainWindow.getInstance().displayMessage(e.getMessage());
 			}
 		else {
 			try {
-				roomconnection.sendThreadedMessage(text, parent);
+				roomconnection.sendThreadedMessage(text, parent, properties);
 			} catch (Exception e) {
 				MainWindow.getInstance().displayMessage(e.getMessage());
 			}

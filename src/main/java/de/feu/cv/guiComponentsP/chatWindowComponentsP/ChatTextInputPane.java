@@ -5,6 +5,7 @@ import javax.swing.*;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -110,7 +111,10 @@ public class ChatTextInputPane extends JPanel implements Observer {
 					    
 						    if (!text.equals("")){// dont send empty messages
                                 //TODO Acá envía el mensaje!! Probablemente tenga que enviar mas parametros.
-								chatroom.sendThreadedMessage(text);
+
+                                HashMap<String, String> properties = buildPropertyMap();
+
+								chatroom.sendThreadedMessage(text, properties);
 						    }
 						    // clear the input field
 							chatTextArea.setText("");
@@ -134,7 +138,24 @@ public class ChatTextInputPane extends JPanel implements Observer {
 	
 		return chatTextArea;
 	}
-	/**
+
+    /**
+     * creates a hash map with all the properties that should be added to the message before sending it
+     *
+     * @return a HashMap of propertyName, value pairs (all Strings)
+     */
+    private HashMap<String, String> buildPropertyMap() {
+        HashMap<String, String> properties = new HashMap<String, String>();
+        if (typesCombo.getSelectedItem() != null) {
+            properties.put("ibis-type", (String) typesCombo.getSelectedItem());
+        }
+        if (relationsCombo.getSelectedItem() != null) {
+            properties.put("ibis-relation", (String) relationsCombo.getSelectedItem());
+        }
+        return properties;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    /**
 	 * Sets the focus to the text input window. 
 	 */
 	public void setFocusToTextInput(){

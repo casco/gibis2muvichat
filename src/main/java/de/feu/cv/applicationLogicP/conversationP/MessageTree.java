@@ -18,6 +18,8 @@ public class MessageTree extends Tree implements Serializable, Cloneable, ChatDa
 
 	private static final long serialVersionUID = 3901716652653542953L;
 
+    //TODO add support for additional custom properties (not only parent_nick and parent_id)
+
 	/**
 	 * Creates a new message tree.
 	 */

@@ -113,7 +113,7 @@ public class ThreadedMessage implements Serializable, Comparable {
 	 */
 	public String toString(){
 		DateFormat df = DateFormat.getTimeInstance(DateFormat.MEDIUM);
-		return "["+df.format(date)+"] "+nick+": "+text;
+		return "[" + df.format(date) + "] " + nick + ": " + text;
 	}
 
 	/**

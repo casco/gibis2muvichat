@@ -84,9 +84,9 @@ public class Conversation extends Observable implements Observer, Serializable {
 	 */
 	public Conversation(Observable roomConnection){
 		this();
-        //TODO leer el siguiente comentario
-        //LA conversación se hace observador del RoomCOnnection para enterarse cada vez que llega un mensaje
-        //Ver el método update()
+        //TODO aquí debajo ver como la conversación se hace Observer del RoomConneciton
+        // para enterarse cada vez que llega un mensaje
+        // Ver el método update()
 		this.roomConnection = roomConnection;
 		this.roomConnection.addObserver(this);
 	}
@@ -324,8 +324,6 @@ public class Conversation extends Observable implements Observer, Serializable {
 		return displayedmessagetransscript;
 	}
 
-    //TODO: Con este método obtengo todos los mensajes recibidos/enviados.
-    //Lo podría usar para construir un inspector
 	/**
 	 * Returns listmodel of the whole conversation.
 	 * @return the listmodel of the whole conversation

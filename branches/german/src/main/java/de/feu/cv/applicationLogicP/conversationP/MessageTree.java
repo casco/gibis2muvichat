@@ -40,7 +40,10 @@ public class MessageTree extends Tree implements Serializable, Cloneable, ChatDa
 		nodestable.addColumn("id", String.class);
 		nodestable.addColumn("parent_nick", String.class);
 		nodestable.addColumn("parent_id", String.class);
-		
+		//{-*-}
+		nodestable.addColumn("ibis-type", String.class);
+		nodestable.addColumn("ibis-relation", String.class);
+		//{-*-}
 		createUnvisibleRoot();
 
 	}
@@ -68,6 +71,10 @@ public class MessageTree extends Tree implements Serializable, Cloneable, ChatDa
         newnode.setLong("date",message.getDate().getTime());
         newnode.setString("parent_nick", message.getParent_nick());
         newnode.setString("parent_id", message.getParent_id());
+        //{-*-}
+        newnode.setString("ibis-type", message.getIbis_type());
+        newnode.setString("ibis-relation", message.getIbis_relation());
+      	//{-*-}
 		
         
 	}

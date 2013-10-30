@@ -3,8 +3,15 @@ package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 import javax.swing.*;
 
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
+import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
+import de.feu.cv.ibisP.IbisType;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -41,6 +48,27 @@ public class ChatTextInputPane extends JPanel implements Observer {
 		initialize();
 		
 	}
+	
+	private class IbisTypeSelectionActionListener implements ItemListener{		
+		public void itemStateChanged(ItemEvent event) {
+			if (event.getStateChange() == ItemEvent.SELECTED) {
+				String ibis_type = (String) typesCombo.getSelectedItem();
+				ThreadedMessage selection = chatroom.getConversation().getSelection();
+				String ibis_parent_type = selection.getIbis_type();
+				updateIbisRelationList(ibis_type, ibis_parent_type);
+			}			
+		}		
+		
+		private void updateIbisRelationList(String ibis_type, String ibis_parent_type){
+			IbisType type = IbisType.getIbisType(ibis_parent_type);
+			String[] relations = type.getRelations(IbisType.getIbisType(ibis_type));
+			relationsCombo.removeAllItems();
+			for (int i=0; i < relations.length; i++){
+				relationsCombo.addItem(relations[i]);
+			}
+		}
+	}
+	//{-*-}
 
 	/**
 	 * This method initializes this.
@@ -56,17 +84,37 @@ public class ChatTextInputPane extends JPanel implements Observer {
         combosPanel.add(relationsCombo, BorderLayout.SOUTH);
         this.add(getChatTextArea(), BorderLayout.CENTER);
         this.add(combosPanel, BorderLayout.EAST);
+        
+        //{-*-}        
+        typesCombo.addItemListener(new IbisTypeSelectionActionListener());
+        //{-*-}
 	}
 
+	//{-*-}
+	private String[] getAvailableIbisMessageTypes(String parent_type){		
+		IbisType type = IbisType.getIbisType(parent_type);
+		return type.getResponseTypes();
+	}
+	
+	private String[] getAvailableIbisRelationTypes(String parent_type){		
+		IbisType type = IbisType.getIbisType(parent_type);
+		String[] responses = type.getResponseTypes();
+		return type.getRelations(IbisType.getIbisType(responses[0]));
+	}
+	//{-*-}
+	
 
     @Override
     public void update(Observable o, Object arg) {
         //Something changed in teh conversation of my chatroom (possibly its selection ?
-        if (chatroom.getConversation().getSelection() != null)       {
-
+    	ThreadedMessage message = chatroom.getConversation().getSelection(); 
+        if (message != null)       {
+        	//{-*-}
+        		
             //TODO: Acá hay que armar la lista para los combo box con las cosas que corresponde
-            String[] messageTypeStrings = {"Message is...", "Issue", "Position", "Argument" };
-
+            //String[] messageTypeStrings = {"Message is...", "Issue", "Position", "Argument" };
+        	String parent_type = message.getIbis_type();
+        	String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
             typesCombo.removeAllItems();
             for (String item : messageTypeStrings) {
               typesCombo.addItem(item);
@@ -74,9 +122,9 @@ public class ChatTextInputPane extends JPanel implements Observer {
             typesCombo.setSelectedIndex(0);
 
 
-            String[] relationTypeStrings = {"Relation ...", "generalizes", "specializes", "questions", "is suggested by",
-                    "responds to", "supports", "objects to", "replaces" };
-
+//            String[] relationTypeStrings = {"Relation ...", "generalizes", "specializes", "questions", "is suggested by",
+//                    "responds to", "supports", "objects to", "replaces" };
+            String[] relationTypeStrings = getAvailableIbisRelationTypes(parent_type);
             relationsCombo.removeAllItems();
             for (String item : relationTypeStrings) {
                 relationsCombo.addItem(item);

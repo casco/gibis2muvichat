@@ -42,6 +42,29 @@ public class ThreadedMessage implements Serializable, Comparable {
 	 */
 	private String parent_id;
 
+	//{-*-}
+	private String ibis_type;
+	private String ibis_relation;	
+	
+	public String getIbis_type() {
+		return ibis_type;
+	}
+	public void setIbis_type(String ibis_type) {
+		this.ibis_type = ibis_type;
+	}
+	
+	public String getIbis_relation() {
+		return ibis_relation;
+	}
+	public void setIbis_relation(String ibis_relation) {
+		this.ibis_relation = ibis_relation;
+	}
+	
+	//{-*-}
+
+	
+	
+	
 	/**
 	 * Create a new message with the given paramenters.
 	 * @param date the arrival date
@@ -79,8 +102,17 @@ public class ThreadedMessage implements Serializable, Comparable {
 	 * Gives the message text.
 	 * @return  the message text
 	 */
+	//{-*-}	
+	//evil hack for printing the IbisType and IbisRelation	 
+	//{-*-}
 	public String getText() {
-		return text;
+		String type = this.getIbis_type();
+		String relation = this.getIbis_relation();
+		if (relation != null){
+			type += " (" + relation + ")";
+		}
+		type += "\r\n"; 
+		return type + text;
 	}
 
 	/**

@@ -3,6 +3,7 @@ package de.feu.cv.transportP;
 import java.util.*;
 
 import com.sun.istack.internal.Nullable;
+
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -58,6 +59,10 @@ public class RoomConnection extends Observable{
 	        	String id = message.getPacketID();
 	        	String parent_nick = (String) message.getProperty("parent_nick");
 	        	String parent_id = (String) message.getProperty("parent_id");
+	        	//{-*-}
+	        	String ibis_type = (String) message.getProperty("ibis-type");
+	        	String ibis_relation = (String) message.getProperty("ibis-relation");
+	        	//{-*-}
 
                 //TODO: Obtener otras propiedades que hayamos seteado en el mensaje
 	        	
@@ -69,6 +74,10 @@ public class RoomConnection extends Observable{
 	        	if (!nick.equals("")){ 
 	        		// generate ThreadedMessage
 		        	ThreadedMessage threadedmessage = new ThreadedMessage(date,text,nick,id,parent_nick,parent_id, message);
+		        	//{-*-}
+		        	threadedmessage.setIbis_type(ibis_type);
+		        	threadedmessage.setIbis_relation(ibis_relation);
+		        	//{-*-}
 	        		setChanged();
 	        		notifyObservers(threadedmessage);	        		
 	        	}
@@ -214,11 +223,11 @@ public class RoomConnection extends Observable{
     public void sendMessage(String text, @Nullable HashMap<String, String> properties) throws Exception {
         Message message = new Message(muc.getRoom(), Message.Type.GROUP_CHAT);
         message.setBody(text);
-        if (properties != null) {
+        if (properties != null) {        	
             for (Map.Entry<String, String> entry : properties.entrySet()) {
                 message.setProperty(entry.getKey(), entry.getValue());
             }
-        }
+        }        
         try {
             muc.sendMessage(message);
 

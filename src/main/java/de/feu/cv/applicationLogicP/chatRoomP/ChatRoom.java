@@ -147,6 +147,9 @@ public class ChatRoom {
 		ThreadedMessage parent = conversation.getSelection();
 		if (parent==null)
 			try {
+				//{-*-}
+				properties.put("ibis-type", "Issue");
+				//{-*-}
 				roomconnection.sendMessage(text, properties);
 			} catch (Exception e) {
 				MainWindow.getInstance().displayMessage(e.getMessage());

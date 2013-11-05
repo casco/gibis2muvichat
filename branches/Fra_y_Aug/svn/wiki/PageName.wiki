@@ -1,0 +1,1 @@
+La página MuViChatConTipos explica los lugares donde hay que mirar para avanzar con las extensiones de tipos a MuViChat.

@@ -1,0 +1,18 @@
+La versión actual del código tiene comentarios con TODO en los lugares mas interesantes para extender y conseguir agregar tipos a los mensajes. Los ambientes como Eclipse e INtelliJ Idea muestran todos los TODOs en alguna solapa.
+
+Las clases mas interesantes son:
+
+  * ChatTextInputPane
+
+
+Otras que tienen comentarios son: 
+
+  * de.feu.cv.applicationLogicP.conversationP.Conversation
+  * de.feu.cv.applicationLogicP.conversationP.MessageTree;
+  * de.feu.cv.transportP.RoomConnection;
+
+
+Modificaciones en relación a el MuViChat original
+
+  * de.feu.cv.applicationLogicP.conversationP.ThreadedMessage cambió algunos de sus mensajes. Ahora los mensajes para enviar "mensajes" peden recibir un hashmap como parametro con propiedades adicionales a agregar.
+  * Hay un inspector de mensajes que se puede abrir desde el menú Extras, Inspect. La clase que lo implementa es de.feu.cv.guiComponentsP.chatWindowComponentsP.ChatInspectorWindow. Sirve para inspeccionar las propiedades de los mensajes. 

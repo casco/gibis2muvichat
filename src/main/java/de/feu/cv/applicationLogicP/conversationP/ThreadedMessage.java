@@ -57,7 +57,7 @@ public class ThreadedMessage implements Serializable, Comparable {
 		return ibis_relation;
 	}
 	public void setIbis_relation(String ibis_relation) {
-		this.ibis_relation = ibis_relation;
+		this.ibis_relation = ibis_relation;    
 	}
 	
 	//{-*-}

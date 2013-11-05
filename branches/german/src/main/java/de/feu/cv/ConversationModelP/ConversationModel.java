@@ -1,4 +1,4 @@
-package de.feu.cv.ibisP;
+package de.feu.cv.ConversationModelP;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface ConversationModel {
 	 * @param referencedType el tipo del mensaje seleccionado...
 	 * @return
 	 */
-	  public String messageTypes(String referencedType);
+	  public List<String> messageTypes(String referencedType);
 	  
 	  /**
 	   * 
@@ -17,7 +17,7 @@ public interface ConversationModel {
 	   * @param destination
 	   * @return
 	   */
-	  public String relationType(String sourceMessageType, String destinationMessageType);
+	  public List<String> relationTypes(String sourceMessageType, String destinationMessageType);
 	  
 	  
 	  /**

@@ -2,9 +2,9 @@ package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
 import javax.swing.*;
 
+import de.feu.cv.ConversationModelP.IbisType;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
-import de.feu.cv.ibisP.IbisType;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

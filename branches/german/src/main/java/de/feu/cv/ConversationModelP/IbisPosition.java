@@ -1,4 +1,4 @@
-package de.feu.cv.ibisP;
+package de.feu.cv.ConversationModelP;
 
 public class IbisPosition extends IbisType{
 

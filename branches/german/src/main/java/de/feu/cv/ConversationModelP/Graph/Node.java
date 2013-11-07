@@ -6,18 +6,18 @@ public class Node {
 
 	// Atributos
 	private String name;
-	private ArrayList<Relation> transitions; //transiciones de salida
+	private ArrayList<Relation> relations; //transiciones de salida
 	
 	
 	
 	public Node(String name) {
 		super();
 		this.name = name;
-		this.transitions= new ArrayList<Relation>(); //nodo sin transiciones por defecto
+		this.relations= new ArrayList<Relation>(); //nodo sin transiciones por defecto
 	}
 	
-	public void addTransition(Relation t){
-		transitions.add(t);
+	public void addRelation(Relation t){
+		relations.add(t);
 	}
 	
 	public String getName() {
@@ -27,10 +27,10 @@ public class Node {
 		this.name = name;
 	}
 	public ArrayList<Relation> getTransitions() {
-		return transitions;
+		return relations;
 	}
 	public void setTransitions(ArrayList<Relation> transitions) {
-		this.transitions = transitions;
+		this.relations = transitions;
 	}
 	
 	

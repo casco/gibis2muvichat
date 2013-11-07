@@ -1,15 +1,28 @@
 package de.feu.cv.ConversationModelP;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public interface ConversationModel {
+import de.feu.cv.ConversationModelP.Graph.Node;
+
+
+public class ConversationModel { // Clase Padre
+	
+	// Atributos
+	HashMap<String, Node> roots; // cada nodo inicial (root) con su nombre
+	HashMap<String, Node> nodes;
+	
 	
 	/**
 	 * Devuelve los typos (sus nombres) que pueden actuar como respuesta al que se envia como parametro 
 	 * @param referencedType el tipo del mensaje seleccionado...
 	 * @return
 	 */
-	  public List<String> messageTypes(String referencedType);
+	  public List<String> getReplyMessageTypes(String referencedType){
+		  
+		  return null;
+	  }
 	  
 	  /**
 	   * 
@@ -17,13 +30,17 @@ public interface ConversationModel {
 	   * @param destination
 	   * @return
 	   */
-	  public List<String> relationTypes(String sourceMessageType, String destinationMessageType);
+	  public List<String> getReplyRelationTypes(String sourceMessageType, String destinationMessageType){
+		  return null;
+	  }
 	  
 	  
 	  /**
 	   * Message type that can be used to start conversations
 	   */
-	  public List<String> rootTypes();
+	  public List<String> getRootMTypes(){
+		  return new ArrayList<String>(roots.keySet());
+	  }
 	  
 
 }

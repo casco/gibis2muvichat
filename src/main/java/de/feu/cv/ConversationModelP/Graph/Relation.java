@@ -1,6 +1,6 @@
 package de.feu.cv.ConversationModelP.Graph;
 
-public class Transition {
+public class Relation {
 	
 	// Atributos
 	private String name;
@@ -8,7 +8,7 @@ public class Transition {
 	
 	
 	// Constructor
-	public Transition(String name, Node to) {
+	public Relation(String name, Node to) {
 		super();
 		this.name = name;
 		this.to = to;

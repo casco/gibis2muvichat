@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 
-/**
- * @author AUGUSTO
- *
- */
 public class IbisConversationModel implements ConversationModel {
 
 	ArrayList<String> rootsNodes;

@@ -16,7 +16,7 @@ public interface ConversationModel {
 	  /**
 	   * 
 	   * @param sourceMessageType
-	   * @param destination
+	   * @param destinationMessageType
 	   * @return
 	   */
 	  public List<String> getReplyRelationTypes(String sourceMessageType, String destinationMessageType);
@@ -26,6 +26,14 @@ public interface ConversationModel {
 	   * Message type that can be used to start conversations
 	   */
 	  public List<String> getRootMessageTypes();
+
+    /**
+     * Clears all nodes and edges in teh receiver. Recreates itself from
+     * the specification the dotString; a String that specifies a graph
+     * using DOT notation: http://en.wikipedia.org/wiki/DOT_(graph_description_language)
+     * @param dotString
+     */
+      public void reconfigureFromDOT(String dotString);
 	  
 
 }

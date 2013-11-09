@@ -28,12 +28,12 @@ public interface ConversationModel {
 	  public List<String> getRootMessageTypes();
 
     /**
-     * Clears all nodes and edges in teh receiver. Recreates itself from
-     * the specification the dotString; a String that specifies a graph
-     * using DOT notation: http://en.wikipedia.org/wiki/DOT_(graph_description_language)
-     * @param dotString
+     * Clears all nodes and edges in the receiver. Recreates itself from
+     * the specification the tgfString; a String that specifies a graph
+     * using TGF notation: http://en.wikipedia.org/wiki/Trivial_Graph_Format
+     * @param tgfString
      */
-      public void reconfigureFromDOT(String dotString);
+      public void reconfigureFromTGF(String tgfString);
 	  
 
 }

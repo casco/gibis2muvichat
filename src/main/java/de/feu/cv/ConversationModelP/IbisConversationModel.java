@@ -11,7 +11,7 @@ import java.util.List;
 
 public class IbisConversationModel implements ConversationModel {
 
-	ArrayList<String> rootsNodes;
+	ArrayList<String> rootNodes;
 	HashMap<String, HashMap<String, String[]>> nodes;
 	
 	/**
@@ -19,7 +19,7 @@ public class IbisConversationModel implements ConversationModel {
 	 */
 	public IbisConversationModel(String XML) {
 		super();
-		rootsNodes = new ArrayList<String>();
+		rootNodes = new ArrayList<String>();
 		nodes = new HashMap<String, HashMap<String, String[]>>();
 		createConversationModelFromXML(XML);
 	}
@@ -52,7 +52,7 @@ public class IbisConversationModel implements ConversationModel {
 		String[] typesFromIssueToArgument = {"Questions", "Is-suggested-by"};
 		relationsFromIssue.put("Argument", typesFromIssueToArgument);
 		nodes.put("Issue", relationsFromIssue);
-		rootsNodes.add("Issue");
+		rootNodes.add("Issue");
 		
 		HashMap<String, String[]> relationsFromPosition = new HashMap<String, String[]>();
 		String[] typesFromPositionToIssue = {"Responds-to"};
@@ -92,8 +92,14 @@ public class IbisConversationModel implements ConversationModel {
 	   * Message type that can be used to start conversations
 	   */
 	  public List<String> getRootMessageTypes(){
-		  return rootsNodes;
+		  return rootNodes;
 	  }
+
+	@Override
+	public void reconfigureFromTGF(String tgfString) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 

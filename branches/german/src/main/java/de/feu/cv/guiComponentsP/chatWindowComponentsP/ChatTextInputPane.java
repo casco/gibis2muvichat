@@ -2,6 +2,7 @@ package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
 import javax.swing.*;
 
+import de.feu.cv.ConversationModelP.IbisConversationModel;
 import de.feu.cv.ConversationModelP.IbisType;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
@@ -13,6 +14,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,6 +31,9 @@ public class ChatTextInputPane extends JPanel implements Observer {
 
     private JComboBox<String> typesCombo = null;
     private JComboBox<String> relationsCombo = null;
+    
+    // Conversation Model
+    private IbisConversationModel conversationModel;
 
 
 	/**
@@ -49,22 +54,26 @@ public class ChatTextInputPane extends JPanel implements Observer {
 		
 	}
 	
-	private class IbisTypeSelectionActionListener implements ItemListener{		
+	private class ConversationTypeSelectionActionListener implements ItemListener{		
 		public void itemStateChanged(ItemEvent event) {
 			if (event.getStateChange() == ItemEvent.SELECTED) {
-				String ibis_type = (String) typesCombo.getSelectedItem();
+				// obtener el nombre del Mtype del combo
+				String mType = (String) typesCombo.getSelectedItem();
 				ThreadedMessage selection = chatroom.getConversation().getSelection();
-				String ibis_parent_type = selection.getIbis_type();
-				updateIbisRelationList(ibis_type, ibis_parent_type);
+				String mType_parent = selection.getIbis_type();
+				// refrescar lista de relaciones
+				updateRelationList(mType, mType_parent);
 			}			
 		}		
 		
-		private void updateIbisRelationList(String ibis_type, String ibis_parent_type){
-			IbisType type = IbisType.getIbisType(ibis_parent_type);
-			String[] relations = type.getRelations(IbisType.getIbisType(ibis_type));
+		private void updateRelationList(String relation_type, String relation_parent_type){
+			// Obtener todas las posibles relaciones entre un Mtype padre y el Mtype actual
+			List<String> relations = conversationModel.getReplyRelationTypes(relation_parent_type, relation_type);
+			String[] r= (String[]) relations.toArray(); // convierte en Array de strings
+			// Iterar sobre als relaciones y agregarlas al combo		
 			relationsCombo.removeAllItems();
-			for (int i=0; i < relations.length; i++){
-				relationsCombo.addItem(relations[i]);
+			for (int i=0; i < r.length; i++){
+				relationsCombo.addItem(r[i]);
 			}
 		}
 	}
@@ -85,16 +94,21 @@ public class ChatTextInputPane extends JPanel implements Observer {
         this.add(getChatTextArea(), BorderLayout.CENTER);
         this.add(combosPanel, BorderLayout.EAST);
         
+        // Conversation Model
+        //TODO cambiar NULL por un archivo XML real. Habría que desharcodear IBIS
+        this.conversationModel= new IbisConversationModel("NULL");
         //{-*-}        
-        typesCombo.addItemListener(new IbisTypeSelectionActionListener());
+        typesCombo.addItemListener(new ConversationTypeSelectionActionListener());
+        
         //{-*-}
 	}
 
-	//{-*-}
+/*	//{-*-}  método de Germán --------------------------------------------------
 	private String[] getAvailableIbisMessageTypes(String parent_type){		
 		IbisType type = IbisType.getIbisType(parent_type);
 		return type.getResponseTypes();
 	}
+*/
 	
 	private String[] getAvailableIbisRelationTypes(String parent_type){		
 		IbisType type = IbisType.getIbisType(parent_type);
@@ -113,8 +127,15 @@ public class ChatTextInputPane extends JPanel implements Observer {
         		
             //TODO: AcÃ¡ hay que armar la lista para los combo box con las cosas que corresponde
             //String[] messageTypeStrings = {"Message is...", "Issue", "Position", "Argument" };
+        	
+        	// Pedir al mensaje el Mtype
+        	//TODO - cambiar el nombre del método en la clase thrededmessage
         	String parent_type = message.getIbis_type();
-        	String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
+        	// pedir los posibles mTypes a los que se puede llegar desde el mType actual
+        	// código de Germán --> String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
+        	List<String> messageTypeStrings_list = conversationModel.getReplyMessageTypes(parent_type);
+        	String[] messageTypeStrings= (String[]) messageTypeStrings_list.toArray(); // convertir a Array
+        	// Actualizar combo mType
             typesCombo.removeAllItems();
             for (String item : messageTypeStrings) {
               typesCombo.addItem(item);

@@ -60,8 +60,8 @@ public class RoomConnection extends Observable{
 	        	String parent_nick = (String) message.getProperty("parent_nick");
 	        	String parent_id = (String) message.getProperty("parent_id");
 	        	//{-*-}
-	        	String ibis_type = (String) message.getProperty("ibis-type");
-	        	String ibis_relation = (String) message.getProperty("ibis-relation");
+	        	String mtype = (String) message.getProperty("mType");
+	        	String rType = (String) message.getProperty("rType");
 	        	//{-*-}
 
                 //TODO: Obtener otras propiedades que hayamos seteado en el mensaje
@@ -75,9 +75,8 @@ public class RoomConnection extends Observable{
 	        		// generate ThreadedMessage
 		        	ThreadedMessage threadedmessage = new ThreadedMessage(date,text,nick,id,parent_nick,parent_id, message);
 		        	//{-*-}
-		        	//threadedmessage.setIbis_type(ibis_type);
-		        	threadedmessage.setMessageType(ibis_type);
-		        	threadedmessage.setRelationType(ibis_relation);
+		        	threadedmessage.setMessageType(mtype);
+		        	threadedmessage.setRelationType(rType);
 		        	//{-*-}
 	        		setChanged();
 	        		notifyObservers(threadedmessage);	        		

@@ -1,22 +1,21 @@
 package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
-import javax.swing.*;
-
-import de.feu.cv.ConversationModelP.IbisConversationModel;
-import de.feu.cv.ConversationModelP.IbisType;
-import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
-import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
+import de.feu.cv.ConversationModelP.IbisConversationModel;
+import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
+import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
 
 /**
  * Container with text input field.
@@ -32,7 +31,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
     private JComboBox<String> typesCombo = null;
     private JComboBox<String> relationsCombo = null;
     
-    // Conversation Model
+    //TODO Conversation Model
     private IbisConversationModel conversationModel;
 
 
@@ -246,10 +245,10 @@ public class ChatTextInputPane extends JPanel implements Observer {
         //TODO: Aquí se agregan las propiedades relativas al tipo de mensaje y tipo de relación con el padre
         HashMap<String, String> properties = new HashMap<String, String>();
         if (typesCombo.getSelectedItem() != null) {
-            properties.put("ibis-type", (String) typesCombo.getSelectedItem());
+            properties.put("mType", (String) typesCombo.getSelectedItem());
         }
         if (relationsCombo.getSelectedItem() != null) {
-            properties.put("ibis-relation", (String) relationsCombo.getSelectedItem());
+            properties.put("rType", (String) relationsCombo.getSelectedItem());
         }
         return properties;  //To change body of created methods use File | Settings | File Templates.
     }

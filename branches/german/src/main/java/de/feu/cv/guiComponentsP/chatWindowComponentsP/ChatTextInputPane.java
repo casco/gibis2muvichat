@@ -60,7 +60,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 				// obtener el nombre del Mtype del combo
 				String mType = (String) typesCombo.getSelectedItem();
 				ThreadedMessage selection = chatroom.getConversation().getSelection();
-				String mType_parent = selection.getIbis_type();
+				String mType_parent = selection.getMessageType();
 				// refrescar lista de relaciones
 				updateRelationList(mType, mType_parent);
 			}			
@@ -128,7 +128,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
         	
         	// Pedir al mensaje el Mtype
         	//TODO - cambiar el nombre del método en la clase thrededmessage
-        	String parent_type = message.getIbis_type();
+        	String parent_type = message.getMessageType();
         	// pedir los posibles mTypes a los que se puede llegar desde el mType actual
         	// código de Germán --> String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
         	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);

@@ -43,21 +43,21 @@ public class ThreadedMessage implements Serializable, Comparable {
 	private String parent_id;
 
 	//{-*-}
-	private String ibis_type;
-	private String ibis_relation;	
+	private String messageType;
+	private String relationType;	
 	
-	public String getIbis_type() {
-		return ibis_type;
+	public String getMessageType() {
+		return messageType;
 	}
-	public void setIbis_type(String ibis_type) {
-		this.ibis_type = ibis_type;
+	public void setMessageType(String mType) {
+		this.messageType = mType;
 	}
 	
-	public String getIbis_relation() {
-		return ibis_relation;
+	public String getRelationType() {
+		return relationType;
 	}
-	public void setIbis_relation(String ibis_relation) {
-		this.ibis_relation = ibis_relation;    
+	public void setRelationType(String rType) {
+		this.relationType = rType;    
 	}
 	
 	//{-*-}
@@ -106,8 +106,8 @@ public class ThreadedMessage implements Serializable, Comparable {
 	//evil hack for printing the IbisType and IbisRelation	 
 	//{-*-}
 	public String getText() {
-		String type = this.getIbis_type();
-		String relation = this.getIbis_relation();
+		String type = this.getMessageType();
+		String relation = this.getRelationType();
 		if (relation != null){
 			type += " (" + relation + ")";
 		}

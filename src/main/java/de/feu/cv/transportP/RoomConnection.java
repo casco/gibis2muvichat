@@ -75,8 +75,9 @@ public class RoomConnection extends Observable{
 	        		// generate ThreadedMessage
 		        	ThreadedMessage threadedmessage = new ThreadedMessage(date,text,nick,id,parent_nick,parent_id, message);
 		        	//{-*-}
-		        	threadedmessage.setIbis_type(ibis_type);
-		        	threadedmessage.setIbis_relation(ibis_relation);
+		        	//threadedmessage.setIbis_type(ibis_type);
+		        	threadedmessage.setMessageType(ibis_type);
+		        	threadedmessage.setRelationType(ibis_relation);
 		        	//{-*-}
 	        		setChanged();
 	        		notifyObservers(threadedmessage);	        		

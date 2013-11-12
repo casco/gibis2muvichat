@@ -274,14 +274,15 @@ public class Conversation extends Observable implements Observer, Serializable {
 			String parent_nick = node.getString("parent_nick");
 			String parent_id = node.getString("parent_id");
 			//{-*-}
-			String ibis_type = node.getString("ibis-type");
-			String ibis_relation = node.getString("ibis-relation");
+			String mType = node.getString("ibis-type");
+			String rType = node.getString("ibis-relation");
 			//{-*-}
 			
 			tm = new ThreadedMessage(date, text, nick, id, parent_nick, parent_id, null);
 			//{-*-}
-			tm.setIbis_type(ibis_type);
-			tm.setIbis_relation(ibis_relation);
+			//tm.setIbis_type(ibis_type);
+			tm.setMessageType(mType);
+			tm.setRelationType(rType);
 			//{-*-}
 		}
 		return tm;

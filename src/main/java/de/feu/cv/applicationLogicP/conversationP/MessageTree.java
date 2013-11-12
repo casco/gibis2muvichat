@@ -72,8 +72,8 @@ public class MessageTree extends Tree implements Serializable, Cloneable, ChatDa
         newnode.setString("parent_nick", message.getParent_nick());
         newnode.setString("parent_id", message.getParent_id());
         //{-*-}
-        newnode.setString("ibis-type", message.getIbis_type());
-        newnode.setString("ibis-relation", message.getIbis_relation());
+        newnode.setString("ibis-type", message.getMessageType());
+        newnode.setString("ibis-relation", message.getRelationType());
       	//{-*-}
 		
         

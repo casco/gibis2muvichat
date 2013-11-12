@@ -148,7 +148,7 @@ public class ChatRoom {
 		if (parent==null)
 			try {
 				//{-*-}
-				//properties.put("ibis-type", "Issue");
+				//properties.put("mType", "Issue");
 				//{-*-}
 				roomconnection.sendMessage(text, properties);
 			} catch (Exception e) {

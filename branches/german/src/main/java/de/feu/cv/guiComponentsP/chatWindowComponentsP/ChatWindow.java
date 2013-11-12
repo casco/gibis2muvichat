@@ -1,27 +1,19 @@
 package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 
 import de.feu.cv.applicationLogicP.MuViChatConstants;
 import de.feu.cv.applicationLogicP.Resources;
 import de.feu.cv.applicationLogicP.conversationP.Conversation;
 import de.feu.cv.guiComponentsP.MainWindow;
 import de.feu.cv.guiComponentsP.dialogP.ChatWindowPropertyDialog;
-
-import javax.swing.JMenuItem;
 
 
 public abstract class ChatWindow extends JFrame {
@@ -53,6 +45,8 @@ public abstract class ChatWindow extends JFrame {
 	private JMenuItem optionsMenuItem = null;
 
     private JMenuItem inspectorMenuItem = null;
+
+    private JMenuItem conversationMenuItem = null;
 
 	/**
 	 * The dialog for properties of current visualization.
@@ -351,6 +345,7 @@ public abstract class ChatWindow extends JFrame {
 			extrasMenu.setText((Resources.getString("menu_extras")));
 			extrasMenu.add(getOptionsMenuItem());
             extrasMenu.add(getInspectorMenuItem());
+            extrasMenu.add(getConversationTypeMenuItem());
 		}
 		return extrasMenu;
 	}
@@ -390,9 +385,40 @@ public abstract class ChatWindow extends JFrame {
         }
         return inspectorMenuItem;
     }
-	
-	
-	/**
+
+    /**
+     * This method initializes the menu to load a new conversation type.
+     *
+     * @return javax.swing.JMenuItem
+     */
+    private JMenuItem getConversationTypeMenuItem() {
+        if (conversationMenuItem == null) {
+            conversationMenuItem = new JMenuItem();
+            conversationMenuItem.setText("Set conversation type");
+            conversationMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setConversationType();
+                }
+            });
+        }
+        return conversationMenuItem;
+    }
+
+    private void setConversationType() {
+        final JFileChooser fc = new JFileChooser();
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            //This is where a real application would open the file.
+            System.out.println("Opening: " + file.getName() + "." );
+        } else {
+            System.out.println("Open command cancelled by user." );
+        }
+
+    }
+
+
+    /**
 	 * Creates a new property dialog window or set the existing one visible.
 	 */
 	private void createChatWindowPropertyDialog(){

@@ -60,9 +60,14 @@ public class ChatTextInputPane extends JPanel implements Observer {
 				// obtener el nombre del Mtype del combo
 				String mType = (String) typesCombo.getSelectedItem();
 				ThreadedMessage selection = chatroom.getConversation().getSelection();
-				String mType_parent = selection.getMessageType();
-				// refrescar lista de relaciones
-				updateRelationList(mType, mType_parent);
+				
+				if (selection!=null){ // Hay un mensaje seleccionado
+					String mType_parent = selection.getMessageType();
+					// refrescar lista de relaciones
+					updateRelationList(mType, mType_parent);
+				}else{// no hay mensaje seleccionado
+					relationsCombo.removeAll();
+				}
 			}			
 		}		
 		
@@ -95,9 +100,14 @@ public class ChatTextInputPane extends JPanel implements Observer {
         this.add(getChatTextArea(), BorderLayout.CENTER);
         this.add(combosPanel, BorderLayout.EAST);
         
+
         // Conversation Model
         //TODO cambiar NULL por un archivo XML real. Habría que desharcodear IBIS
         this.conversationModel= new IbisConversationModel("NULL");
+        
+     // inicialización del combo de types
+        initializeComboRootsMTypes();
+        
         //{-*-}        
         typesCombo.addItemListener(new ConversationTypeSelectionActionListener());
         
@@ -156,11 +166,25 @@ public class ChatTextInputPane extends JPanel implements Observer {
             relationsCombo.setSelectedIndex(0);
             
 */            
+        }else{
+        	initializeComboRootsMTypes();
         }
 
 
 
     }
+
+	private void initializeComboRootsMTypes() {
+		
+		List<String> messageTypeStrings = conversationModel.getRootMessageTypes();
+    	
+    	// Actualizar combo mType
+        typesCombo.removeAllItems();
+        for (String item : messageTypeStrings) {
+          typesCombo.addItem(item);
+        }
+        typesCombo.setSelectedIndex(0);
+	}
 
 	/**
 	 * This method initializes chatTextArea.

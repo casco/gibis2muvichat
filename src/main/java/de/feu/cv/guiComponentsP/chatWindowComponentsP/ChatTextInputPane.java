@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import de.feu.cv.ConversationModelP.ConversationModel;
 import de.feu.cv.ConversationModelP.IbisConversationModel;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
@@ -32,7 +33,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
     private JComboBox<String> relationsCombo = null;
     
     //TODO Conversation Model
-    private IbisConversationModel conversationModel;
+    private ConversationModel conversationModel;
 
 
 	/**
@@ -101,10 +102,10 @@ public class ChatTextInputPane extends JPanel implements Observer {
         
 
         // Conversation Model
-        //TODO cambiar NULL por un archivo XML real. Habría que desharcodear IBIS
+        //TODO cambiar NULL por un archivo XML real. Habrï¿½a que desharcodear IBIS
         this.conversationModel= new IbisConversationModel("NULL");
         
-     // inicialización del combo de types
+     // inicializaciï¿½n del combo de types
         initializeComboRootsMTypes();
         
         //{-*-}        
@@ -113,7 +114,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
         //{-*-}
 	}
 
-/*	//{-*-}  método de Germán --------------------------------------------------
+/*	//{-*-}  mï¿½todo de Germï¿½n --------------------------------------------------
 	private String[] getAvailableIbisMessageTypes(String parent_type){		
 		IbisType type = IbisType.getIbisType(parent_type);
 		return type.getResponseTypes();
@@ -136,10 +137,10 @@ public class ChatTextInputPane extends JPanel implements Observer {
         	//{-*-}
         	
         	// Pedir al mensaje el Mtype
-        	//TODO - cambiar el nombre del método en la clase thrededmessage
+        	//TODO - cambiar el nombre del mï¿½todo en la clase thrededmessage
         	String parent_type = message.getMessageType();
         	// pedir los posibles mTypes a los que se puede llegar desde el mType actual
-        	// código de Germán --> String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
+        	// cï¿½digo de Germï¿½n --> String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
         	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
         	
         	// Actualizar combo mType
@@ -152,10 +153,10 @@ public class ChatTextInputPane extends JPanel implements Observer {
 
 //            String[] relationTypeStrings = {"Relation ...", "generalizes", "specializes", "questions", "is suggested by",
 //                    "responds to", "supports", "objects to", "replaces" };
-            //String[] relationTypeStrings = getAvailableIbisRelationTypes(parent_type); --- código de GERMAN
+            //String[] relationTypeStrings = getAvailableIbisRelationTypes(parent_type); --- cï¿½digo de GERMAN
             // pedir las posibles relaciones para un parent mtype
             //TODO  No comprendo. Es necesario saber todas las posibels relacioens para un mType? 
-            //      Yo pensé qeu sólo eran necesarias dados dos mType
+            //      Yo pensï¿½ qeu sï¿½lo eran necesarias dados dos mType
 /*            List<String>relationTypeStrings_list= conversationModel.getReplyRelationTypes(sourceMessageType, destinationMessageType)
             String[] relationTypeStrings = 
             relationsCombo.removeAllItems();

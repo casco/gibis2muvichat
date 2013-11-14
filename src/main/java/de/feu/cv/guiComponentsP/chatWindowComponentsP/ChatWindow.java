@@ -1,7 +1,10 @@
 package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -410,15 +413,30 @@ public abstract class ChatWindow extends JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             //This is where a real application would open the file.
-            System.out.println("Opening: " + file.getName() + "." );
+            // Se debe cargar el modelo de conversación cambiando el actual.
+            // El nuevo modelo será enviado en forma de broadcast a todos los usuarios
+            //TODO quitar el print
+            System.out.println("Cargando y reconfigurando modelo de conversacion: " + file.getName() + "." );
+            /////////////////////////////////////////////////////////
+            // actualizar modelo de conversación
+            updateConversationModel(file);
+            
+            
+            
         } else {
             System.out.println("Open command cancelled by user." );
         }
 
     }
 
+    // Método abstracto vacío
+    // Deberían implementarlo las subclases
+    protected void updateConversationModel(File file) {
+		// método abstracto vacío
+    	System.out.println("WARNING:  updateCOnversationModel de la clase ChatWindow (Abstracta) !" );
+	}
 
-    /**
+	/**
 	 * Creates a new property dialog window or set the existing one visible.
 	 */
 	private void createChatWindowPropertyDialog(){

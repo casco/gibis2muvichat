@@ -7,6 +7,11 @@ import de.feu.cv.applicationLogicP.Resources;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Window to display online chats.
@@ -179,5 +184,40 @@ public class ChatLiveWindow extends ChatWindow {
 		this.setTitle(Resources.getString("ti_roomname")+ " " + chatroom.getRoomname()+ useraccount);
 	}
 
+
+	// actualiza el modelo de conversación en textInputPane a partir del archivo"file" 
+	protected void updateConversationModel(File file) {
+	    // leer contenido del archivo
+	    try {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				//generar un string con todo el archivo
+				StringBuilder sb = new StringBuilder();
+		        String line = br.readLine();
+
+		        while (line != null) {
+		            sb.append(line);
+		            sb.append('\n');
+		            line = br.readLine();
+		        }
+		        // string conpleto del archivo
+		        String fileDataString = sb.toString();
+		        System.out.println("File Data: " + fileDataString);
+		        br.close();
+		        
+		        //TODO si el archivo de configuración no existe, podría agregarse al directorio conversationModels
+		        
+		        // actualizar modelo de conversación de textInputPane
+		        // TODO llamar al constructor de conversationModel y actualizar la conversación
+		        
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 
 }  

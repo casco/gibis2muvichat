@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import de.feu.cv.ConversationModelP.ConversationModel_Interface;
 import de.feu.cv.ConversationModelP.ConversationModel;
-import de.feu.cv.ConversationModelP.IbisConversationModel;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
 import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
 
@@ -103,7 +103,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 
         // Conversation Model
         //TODO cambiar NULL por un archivo XML real. Habr�a que desharcodear IBIS
-        this.conversationModel= new IbisConversationModel("NULL");
+        this.conversationModel= new ConversationModel("NULL");
         
      // inicializaci�n del combo de types
         initializeComboRootsMTypes();

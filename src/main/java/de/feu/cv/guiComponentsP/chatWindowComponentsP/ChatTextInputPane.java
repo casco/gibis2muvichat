@@ -112,38 +112,26 @@ public class ChatTextInputPane extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //Something changed in teh conversation of my chatroom (possibly its selection ?
-    	ThreadedMessage message = chatroom.getConversation().getSelection(); 
-    	
-    	// verificar si se recibieron parámetros
-    	if ((arg!=null) && (((ThreadedMessage)arg).getConfigurationMessage().equals("true")) ){
-    		// mostrar el argumento en un nuevo diálogo
-    		String newConfigMessage= ((ThreadedMessage)arg).getNick() + " ha cambiado el modelo de conversacion actual.";
-    		JOptionPane.showMessageDialog(this, newConfigMessage);
-    	}
-    	else{
-	        if (message != null) {
-	        	//{-*-}
-	        	
-	        	// Pedir al mensaje el Mtype
-	        	//TODO - cambiar el nombre del mï¿½todo en la clase thrededmessage
-	        	String parent_type = message.getMessageType();
-	        	// pedir los posibles mTypes a los que se puede llegar desde el mType actual        	
-	        	ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
-	        	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
-	        	
-	        	// Actualizar combo mType
-	            typesCombo.removeAllItems();
-	            for (String item : messageTypeStrings) {
-	              typesCombo.addItem(item);
-	            }
-	            typesCombo.setSelectedIndex(0);          
-	        }else{
-	        	initializeComboRootsMTypes();
-	        }
-    	}
-
-
-
+    	ThreadedMessage message = chatroom.getConversation().getSelection();
+        if (message != null) {
+        	//{-*-}
+        	
+        	// Pedir al mensaje el Mtype
+        	//TODO - cambiar el nombre del mï¿½todo en la clase thrededmessage
+        	String parent_type = message.getMessageType();
+        	// pedir los posibles mTypes a los que se puede llegar desde el mType actual        	
+        	ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
+        	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
+        	
+        	// Actualizar combo mType
+            typesCombo.removeAllItems();
+            for (String item : messageTypeStrings) {
+              typesCombo.addItem(item);
+            }
+            typesCombo.setSelectedIndex(0);          
+        }else{
+        	initializeComboRootsMTypes();
+        }
     }
 
 	private void initializeComboRootsMTypes() {
@@ -190,7 +178,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 							chatTextArea.setText("");
 
                            //TODO: Luego de enviar el mensaje, vacÃ­o el combo box.
-                            typesCombo.removeAllItems();
+							initializeComboRootsMTypes();
                            relationsCombo.removeAllItems();
 
 					   } 

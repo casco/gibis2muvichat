@@ -11,6 +11,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.TreeSet;
 
+import javax.swing.JOptionPane;
+
 import prefuse.data.Node;
 import prefuse.data.Tree;
 import prefuse.data.tuple.TableNode;
@@ -167,11 +169,10 @@ public class Conversation extends Observable implements Observer, Serializable {
 			// Verificar tipo de mensaje recibido
 			if (msg.getConfigurationMessage().equals("true")){
 				// si es un mensaje de configuración, se debe cambiar el modelo actual
-				this.conversationModel.createConversationModelFromString(msg.getText());
-				
-				// TODO notificar cambio al textinputPane
-				setChanged();
-				notifyObservers(msg);
+				this.conversationModel.createConversationModelFromString(msg.getText());				
+
+				String newConfigMessage= msg.getNick() + " ha cambiado el modelo de conversacion actual.";
+	    		JOptionPane.showMessageDialog(null, newConfigMessage);
 				
 				
 				//TODO generar y guardar el archivo de configuración

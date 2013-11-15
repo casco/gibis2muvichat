@@ -49,25 +49,46 @@ public class ConversationModel implements ConversationModel_Interface {
 		  </conversationModel>
 		*/
 
-		HashMap<String, String[]> relationsFromIssue = new HashMap<String, String[]>();
-		String[] typesFromIssueToIssue = {"Generalizes", "Specializes", "Replaces", "Questions", "Is-suggested-by"};
-		relationsFromIssue.put("Issue", typesFromIssueToIssue);
-		String[] typesFromIssueToPosition = {"Questions", "Is-suggested-by"};
-		relationsFromIssue.put("Position", typesFromIssueToPosition);
-		String[] typesFromIssueToArgument = {"Questions", "Is-suggested-by"};
-		relationsFromIssue.put("Argument", typesFromIssueToArgument);
-		nodes.put("Issue", relationsFromIssue);
+//		HashMap<String, String[]> relationsFromIssue = new HashMap<String, String[]>();
+//		String[] typesFromIssueToIssue = {"Generalizes", "Specializes", "Replaces", "Questions", "Is-suggested-by"};
+//		relationsFromIssue.put("Issue", typesFromIssueToIssue);
+//		String[] typesFromIssueToPosition = {"Questions", "Is-suggested-by"};
+//		relationsFromIssue.put("Position", typesFromIssueToPosition);
+//		String[] typesFromIssueToArgument = {"Questions", "Is-suggested-by"};
+//		relationsFromIssue.put("Argument", typesFromIssueToArgument);
+//		nodes.put("Issue", relationsFromIssue);
+//		rootNodes.add("Issue");
+//		
+//		HashMap<String, String[]> relationsFromPosition = new HashMap<String, String[]>();
+//		String[] typesFromPositionToIssue = {"Responds-to"};
+//		relationsFromPosition.put("Issue", typesFromPositionToIssue);
+//		nodes.put("Position", relationsFromPosition);
+//		
+//		HashMap<String, String[]> relationsFromArgument = new HashMap<String, String[]>();
+//		String[] typesFromArgumentToPosition = {"Supports", "Objects-to"};
+//		relationsFromArgument.put("Position", typesFromArgumentToPosition);
+//		nodes.put("Argument", relationsFromArgument);
+		
+		HashMap<String, String[]> relationsToIssue = new HashMap<String, String[]>();
+		String[] relationsFromIssueToIssue = {"Generalizes", "Specializes", "Replaces", "Questions", "Is-suggested-by"};
+		relationsToIssue.put("Issue", relationsFromIssueToIssue);
+		String[] relationsFromPositionToIssue = {"Responds-to"};
+		relationsToIssue.put("Position", relationsFromPositionToIssue);
+		
+		nodes.put("Issue", relationsToIssue);
 		rootNodes.add("Issue");
 		
-		HashMap<String, String[]> relationsFromPosition = new HashMap<String, String[]>();
-		String[] typesFromPositionToIssue = {"Responds-to"};
-		relationsFromPosition.put("Issue", typesFromPositionToIssue);
-		nodes.put("Position", relationsFromPosition);
+		HashMap<String, String[]> relationsToPosition = new HashMap<String, String[]>();
+		String[] relationsFromIssueToPosition = {"Questions", "Is-suggested-by"};
+		relationsToPosition.put("Issue", relationsFromIssueToPosition);
+		String[] relationsFromArgumentToPosition = {"Supports", "Objects-to"};
+		relationsToPosition.put("Argument", relationsFromArgumentToPosition);		
+		nodes.put("Position", relationsToPosition);
 		
-		HashMap<String, String[]> relationsFromArgument = new HashMap<String, String[]>();
-		String[] typesFromArgumentToPosition = {"Supports", "Objects-to"};
-		relationsFromArgument.put("Position", typesFromArgumentToPosition);
-		nodes.put("Argument", relationsFromArgument);		
+		HashMap<String, String[]> relationsToArgument = new HashMap<String, String[]>();
+		String[] relationsFromIssueToArgument = {"Questions", "Is-suggested-by"};
+		relationsToArgument.put("Issue", relationsFromIssueToArgument);		
+		nodes.put("Argument", relationsToArgument);
 			
 	}
 	

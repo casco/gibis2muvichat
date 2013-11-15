@@ -62,6 +62,7 @@ public class RoomConnection extends Observable{
 	        	//{-*-}
 	        	String mtype = (String) message.getProperty("mType");
 	        	String rType = (String) message.getProperty("rType");
+	        	String configurationMessage = (String) message.getProperty("configurationMessage");
 	        	//{-*-}
 
                 //TODO: Obtener otras propiedades que hayamos seteado en el mensaje
@@ -77,6 +78,7 @@ public class RoomConnection extends Observable{
 		        	//{-*-}
 		        	threadedmessage.setMessageType(mtype);
 		        	threadedmessage.setRelationType(rType);
+		        	threadedmessage.setConfigurationMessage(configurationMessage);
 		        	//{-*-}
 	        		setChanged();
 	        		notifyObservers(threadedmessage);	        		

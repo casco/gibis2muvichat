@@ -125,7 +125,6 @@ public class Conversation extends Observable implements Observer, Serializable {
 	
 	private void initializeConversationModel(){
 		// Conversation Model
-        //TODO cambiar NULL por un archivo XML real. Habrï¿½a que desharcodear IBIS
         
         File file = new File(CONVERSATION_MODEL_DIR + DEFAULT_CONVERSATION_MODEL);
         try {
@@ -163,6 +162,23 @@ public class Conversation extends Observable implements Observer, Serializable {
 	 */
 	public void update(Observable obs, final Object arg) {
 		if (obs instanceof RoomConnection && arg instanceof ThreadedMessage){
+			ThreadedMessage msg = (ThreadedMessage) arg;
+			
+			// Verificar tipo de mensaje recibido
+			if (msg.getConfigurationMessage().equals("true")){
+				// si es un mensaje de configuración, se debe cambiar el modelo actual
+				this.conversationModel.createConversationModelFromString(msg.getText());
+				
+				// TODO notificar cambio al textinputPane
+				setChanged();
+				notifyObservers(msg);
+				
+				
+				//TODO generar y guardar el archivo de configuración
+				
+			}
+			else{ // Mensaje normal (se debe mostrar) (código original)
+			
 	    	  //change model when new message comes in
 			  addBackgroundElement((ThreadedMessage) arg);
 			  
@@ -171,6 +187,7 @@ public class Conversation extends Observable implements Observer, Serializable {
 				  addDisplayedElement((ThreadedMessage) arg);
 
 			  }
+			}
 		}	
 	}
 

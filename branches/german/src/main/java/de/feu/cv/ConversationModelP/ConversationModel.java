@@ -119,7 +119,7 @@ public class ConversationModel implements ConversationModel_Interface {
         }
         // string completo del archivo
         String fileData = sb.toString();
-        System.out.println("File Data: " + fileData);
+        //System.out.println("File Data: " + fileData);
         br.close();
         return fileData;
 	}

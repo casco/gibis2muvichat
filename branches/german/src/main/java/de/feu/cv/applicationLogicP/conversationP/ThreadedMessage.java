@@ -46,6 +46,14 @@ public class ThreadedMessage implements Serializable, Comparable {
 	private String messageType;
 	private String relationType;	
 	
+	private String configurationMessage; // indica si es un mensaje de configuración
+	
+	public String getConfigurationMessage() {
+		return configurationMessage;
+	}
+	public void setConfigurationMessage(String conversationMessage) {
+		this.configurationMessage = conversationMessage;
+	}
 	public String getMessageType() {
 		return messageType;
 	}

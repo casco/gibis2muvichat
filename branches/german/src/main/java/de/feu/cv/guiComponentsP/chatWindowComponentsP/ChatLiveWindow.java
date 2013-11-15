@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Window to display online chats.
@@ -190,10 +191,15 @@ public class ChatLiveWindow extends ChatWindow {
 	protected void updateConversationModel(File file) {
 	    // leer contenido del archivo
 	    try {   // actualizar modelo de conversación de textInputPane
-		        // TODO llamar al constructor de conversationModel y actualizar la conversación
 		        ConversationModel conversationModel = chatroom.getConversation().getConversationModel(); 
 		        String fileDataString = ConversationModel.fileToString(file);
 		        conversationModel.createConversationModelFromString(fileDataString);
+		        //TODO boradcast hacia el chat, para que todos tengan el nuevo modelo de conversación
+		        
+		        // Crear un mensaje nuevo con el sstring del modelo
+		        HashMap<String, String> properties= ((ChatTextInputPane) textInputPane).buildPropertyMap();
+		        properties.put("configurationMessage", "true");
+		        this.chatroom.sendThreadedMessage(fileDataString, properties);
 				
 			} catch (FileNotFoundException e) {
 				//TODO si el archivo de configuración no existe, podría agregarse al directorio conversationModels

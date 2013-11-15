@@ -1,5 +1,7 @@
 package de.feu.cv.applicationLogicP.conversationP;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.TreeSet;
 import prefuse.data.Node;
 import prefuse.data.Tree;
 import prefuse.data.tuple.TableNode;
+import de.feu.cv.ConversationModelP.ConversationModel;
 import de.feu.cv.transportP.RoomConnection;
 
 /**
@@ -77,6 +80,18 @@ public class Conversation extends Observable implements Observer, Serializable {
 	 */
 	private long starttime;
 	
+	public final String CONVERSATION_MODEL_DIR = "conversationModels/";
+	public final String DEFAULT_CONVERSATION_MODEL = "Ibis.cfg";
+	
+	private ConversationModel conversationModel;
+	
+	public ConversationModel getConversationModel() {	
+		return conversationModel;
+	}
+
+	public void setConversationModel(ConversationModel conversationModel) {
+		this.conversationModel = conversationModel;
+	}
 	
 	/**
 	 * Creates the new conversation which listening to the observable.
@@ -103,7 +118,22 @@ public class Conversation extends Observable implements Observer, Serializable {
 		displayedmessagelist = new ChatListModel();
 		displayedmessagetree = new MessageTree();
 		displayedmessagetransscript = new Transscript();
+		
+		initializeConversationModel();
 
+	}
+	
+	private void initializeConversationModel(){
+		// Conversation Model
+        //TODO cambiar NULL por un archivo XML real. Habr�a que desharcodear IBIS
+        
+        File file = new File(CONVERSATION_MODEL_DIR + DEFAULT_CONVERSATION_MODEL);
+        try {
+			String fileData = ConversationModel.fileToString(file);
+			conversationModel = new ConversationModel(fileData);
+		} catch (IOException e) {			
+			//No va a fallar mientras exista 'ibis.cfg'
+		}        
 	}
 
 	/**

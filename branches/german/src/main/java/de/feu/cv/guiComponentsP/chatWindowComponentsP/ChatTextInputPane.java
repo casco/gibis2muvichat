@@ -3,6 +3,8 @@ package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
@@ -32,15 +34,11 @@ public class ChatTextInputPane extends JPanel implements Observer {
     private JComboBox<String> typesCombo = null;
     private JComboBox<String> relationsCombo = null;
     
-    //TODO Conversation Model
-    private ConversationModel conversationModel;
-
 
 	/**
 	 * The ChatRoom where the input goes.
 	 */
 	private ChatRoom chatroom;
-
 
     /**
 	 * Creates an new TextInputPane connected with the chatroom.
@@ -74,6 +72,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 		private void updateRelationList(String relation_type, String relation_parent_type){
 		
 			// Obtener todas las posibles relaciones entre un Mtype padre y el Mtype actual
+			ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
 			List<String> relations = conversationModel.getReplyRelationTypes(relation_parent_type, relation_type);
 			
 			// Iterar sobre las relaciones y agregarlas al combo		
@@ -100,11 +99,6 @@ public class ChatTextInputPane extends JPanel implements Observer {
         this.add(getChatTextArea(), BorderLayout.CENTER);
         this.add(combosPanel, BorderLayout.EAST);
         
-
-        // Conversation Model
-        //TODO cambiar NULL por un archivo XML real. Habr�a que desharcodear IBIS
-        this.conversationModel= new ConversationModel("NULL");
-        
      // inicializaci�n del combo de types
         initializeComboRootsMTypes();
         
@@ -113,21 +107,6 @@ public class ChatTextInputPane extends JPanel implements Observer {
         
         //{-*-}
 	}
-
-/*	//{-*-}  m�todo de Germ�n --------------------------------------------------
-	private String[] getAvailableIbisMessageTypes(String parent_type){		
-		IbisType type = IbisType.getIbisType(parent_type);
-		return type.getResponseTypes();
-	}
-*/
-	
-/*	private String[] getAvailableIbisRelationTypes(String parent_type){		
-		IbisType type = IbisType.getIbisType(parent_type);
-		String[] responses = type.getResponseTypes();
-		return type.getRelations(IbisType.getIbisType(responses[0]));
-	}
-	//{-*-}
-*/	
 
     @Override
     public void update(Observable o, Object arg) {
@@ -139,8 +118,8 @@ public class ChatTextInputPane extends JPanel implements Observer {
         	// Pedir al mensaje el Mtype
         	//TODO - cambiar el nombre del m�todo en la clase thrededmessage
         	String parent_type = message.getMessageType();
-        	// pedir los posibles mTypes a los que se puede llegar desde el mType actual
-        	// c�digo de Germ�n --> String[] messageTypeStrings = getAvailableIbisMessageTypes(parent_type);
+        	// pedir los posibles mTypes a los que se puede llegar desde el mType actual        	
+        	ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
         	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
         	
         	// Actualizar combo mType
@@ -148,24 +127,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
             for (String item : messageTypeStrings) {
               typesCombo.addItem(item);
             }
-            typesCombo.setSelectedIndex(0);
-
-
-//            String[] relationTypeStrings = {"Relation ...", "generalizes", "specializes", "questions", "is suggested by",
-//                    "responds to", "supports", "objects to", "replaces" };
-            //String[] relationTypeStrings = getAvailableIbisRelationTypes(parent_type); --- c�digo de GERMAN
-            // pedir las posibles relaciones para un parent mtype
-            //TODO  No comprendo. Es necesario saber todas las posibels relacioens para un mType? 
-            //      Yo pens� qeu s�lo eran necesarias dados dos mType
-/*            List<String>relationTypeStrings_list= conversationModel.getReplyRelationTypes(sourceMessageType, destinationMessageType)
-            String[] relationTypeStrings = 
-            relationsCombo.removeAllItems();
-            for (String item : relationTypeStrings) {
-                relationsCombo.addItem(item);
-            }
-            relationsCombo.setSelectedIndex(0);
-            
-*/            
+            typesCombo.setSelectedIndex(0);          
         }else{
         	initializeComboRootsMTypes();
         }
@@ -175,7 +137,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
     }
 
 	private void initializeComboRootsMTypes() {
-		
+		ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
 		List<String> messageTypeStrings = conversationModel.getRootMessageTypes();
     	
     	// Actualizar combo mType

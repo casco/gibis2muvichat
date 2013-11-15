@@ -3,6 +3,11 @@
  */
 package de.feu.cv.ConversationModelP;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,7 +29,7 @@ public class ConversationModel implements ConversationModel_Interface {
 		createConversationModelFromString(str);
 	}
 	
-	void createConversationModelFromString(String str_model) {
+	public void createConversationModelFromString(String str_model) {
 		/*<conversationModel name="IBIS">
 		 *   <node name="Issue" isRoot=true>
 		 *      <relation to="Issue">
@@ -83,7 +88,7 @@ public class ConversationModel implements ConversationModel_Interface {
 	   */
 	  public List<String> getReplyRelationTypes(String sourceMessageType, String destinationMessageType){
 		  String[] relations = nodes.get(sourceMessageType).get(destinationMessageType);
-		  return new ArrayList<String>(Arrays.asList(relations));
+		  return Arrays.asList(relations);
 	  }
 	  
 	  
@@ -99,6 +104,24 @@ public class ConversationModel implements ConversationModel_Interface {
 	public void reconfigureFromTGF(String tgfString) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static String fileToString(File file) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		//generar un string con todo el archivo
+		StringBuilder sb = new StringBuilder();
+        String line = br.readLine();
+
+        while (line != null) {
+            sb.append(line);
+            sb.append('\n');
+            line = br.readLine();
+        }
+        // string completo del archivo
+        String fileData = sb.toString();
+        System.out.println("File Data: " + fileData);
+        br.close();
+        return fileData;
 	}
 
 

@@ -17,7 +17,7 @@ import java.util.List;
 public class ConversationModel implements ConversationModel_Interface {
 
 	ArrayList<String> rootNodes;
-	HashMap<String, HashMap<String, String[]>> nodes;
+	HashMap<String, HashMap<String, ArrayList<String>>> nodes;
 	
 	/**
 	 * 
@@ -25,71 +25,52 @@ public class ConversationModel implements ConversationModel_Interface {
 	public ConversationModel(String str) {
 		super();
 		rootNodes = new ArrayList<String>();
-		nodes = new HashMap<String, HashMap<String, String[]>>();
+		nodes = new HashMap<String, HashMap<String, ArrayList<String>>>();
 		createConversationModelFromString(str);
 	}
 	
 	public void createConversationModelFromString(String str_model) {
-		/*<conversationModel name="IBIS">
-		 *   <node name="Issue" isRoot=true>
-		 *      <relation to="Issue">
-		 *         <type name="generalizes"/>
-		 *         ...
-		 *      </relation>
-		 *      <relation to="Position">
-		 *         ...
-		 *      </relation>
-		 *   </node>
-		 *   <node name="Position" isRoot=false>
-		 *      ...
-		 *   </node>
-		 *   <node name="Argument" isRoot=false>
-		 *      ...
-		 *   </node>
-		  </conversationModel>
-		*/
-
-//		HashMap<String, String[]> relationsFromIssue = new HashMap<String, String[]>();
-//		String[] typesFromIssueToIssue = {"Generalizes", "Specializes", "Replaces", "Questions", "Is-suggested-by"};
-//		relationsFromIssue.put("Issue", typesFromIssueToIssue);
-//		String[] typesFromIssueToPosition = {"Questions", "Is-suggested-by"};
-//		relationsFromIssue.put("Position", typesFromIssueToPosition);
-//		String[] typesFromIssueToArgument = {"Questions", "Is-suggested-by"};
-//		relationsFromIssue.put("Argument", typesFromIssueToArgument);
-//		nodes.put("Issue", relationsFromIssue);
-//		rootNodes.add("Issue");
-//		
-//		HashMap<String, String[]> relationsFromPosition = new HashMap<String, String[]>();
-//		String[] typesFromPositionToIssue = {"Responds-to"};
-//		relationsFromPosition.put("Issue", typesFromPositionToIssue);
-//		nodes.put("Position", relationsFromPosition);
-//		
-//		HashMap<String, String[]> relationsFromArgument = new HashMap<String, String[]>();
-//		String[] typesFromArgumentToPosition = {"Supports", "Objects-to"};
-//		relationsFromArgument.put("Position", typesFromArgumentToPosition);
-//		nodes.put("Argument", relationsFromArgument);
+		String[] str_model_aux = str_model.split("#\n");
+		String str_nodes = str_model_aux[0];
+		String[] str_arr_nodes = str_nodes.split("\n");
+		ArrayList<String> names = new ArrayList<String>();
+		for(String str_n : str_arr_nodes) {
+			String[] str_n_aux = str_n.split(" ");
+			names.add(str_n_aux[1]);
+			if (str_n_aux.length==3) {
+				rootNodes.add(str_n_aux[1]);
+			}
+		}
 		
-		HashMap<String, String[]> relationsToIssue = new HashMap<String, String[]>();
-		String[] relationsFromIssueToIssue = {"Generalizes", "Specializes", "Replaces", "Questions", "Is-suggested-by"};
-		relationsToIssue.put("Issue", relationsFromIssueToIssue);
-		String[] relationsFromPositionToIssue = {"Responds-to"};
-		relationsToIssue.put("Position", relationsFromPositionToIssue);
-		
-		nodes.put("Issue", relationsToIssue);
-		rootNodes.add("Issue");
-		
-		HashMap<String, String[]> relationsToPosition = new HashMap<String, String[]>();
-		String[] relationsFromIssueToPosition = {"Questions", "Is-suggested-by"};
-		relationsToPosition.put("Issue", relationsFromIssueToPosition);
-		String[] relationsFromArgumentToPosition = {"Supports", "Objects-to"};
-		relationsToPosition.put("Argument", relationsFromArgumentToPosition);		
-		nodes.put("Position", relationsToPosition);
-		
-		HashMap<String, String[]> relationsToArgument = new HashMap<String, String[]>();
-		String[] relationsFromIssueToArgument = {"Questions", "Is-suggested-by"};
-		relationsToArgument.put("Issue", relationsFromIssueToArgument);		
-		nodes.put("Argument", relationsToArgument);
-			
+		String[] str_arr_relations = str_model_aux[1].split("\n");
+		HashMap<String, ArrayList<String>> destinos;
+		ArrayList<String> relaciones;
+		for(String str_r : str_arr_relations) {
+			String[] str_r_aux = str_r.split(" ");		    
+		    int destino = Integer.parseInt(str_r_aux[0])-1;
+		    int origen = Integer.parseInt(str_r_aux[1])-1;
+		    String relacion = str_r_aux[2];
+		    if (nodes.containsKey(names.get(origen))) {
+		    	destinos = nodes.get(names.get(origen));
+		    	if (destinos.containsKey(names.get(destino))) {
+		    		relaciones = destinos.get(names.get(destino));
+		    		relaciones.add(relacion);
+		    	} else {
+		    		relaciones = new ArrayList<String>();
+		    		relaciones.add(relacion);
+		    		destinos.put(names.get(destino), relaciones);
+		    	}
+		    		
+		    } else {
+		    	relaciones = new ArrayList<String>();
+		    	relaciones.add(relacion);
+		    	destinos = new HashMap<String, ArrayList<String>>();
+		    	destinos.put(names.get(destino), relaciones);
+		    	nodes.put(names.get(origen), destinos);
+		    	
+		    }
+		    	
+		}			
 	}
 	
 	/**
@@ -108,8 +89,7 @@ public class ConversationModel implements ConversationModel_Interface {
 	   * @return
 	   */
 	  public List<String> getReplyRelationTypes(String sourceMessageType, String destinationMessageType){
-		  String[] relations = nodes.get(sourceMessageType).get(destinationMessageType);
-		  return Arrays.asList(relations);
+		  return nodes.get(sourceMessageType).get(destinationMessageType);
 	  }
 	  
 	  

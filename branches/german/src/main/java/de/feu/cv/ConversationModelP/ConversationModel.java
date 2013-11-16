@@ -30,6 +30,8 @@ public class ConversationModel implements ConversationModel_Interface {
 	}
 	
 	public void createConversationModelFromString(String str_model) {
+		nodes.clear();
+		rootNodes.clear();
 		String[] str_model_aux = str_model.split("#\n");
 		String str_nodes = str_model_aux[0];
 		String[] str_arr_nodes = str_nodes.split("\n");

@@ -193,11 +193,11 @@ public class ChatLiveWindow extends ChatWindow {
 	    try {   // actualizar modelo de conversación de textInputPane
 		        ConversationModel conversationModel = chatroom.getConversation().getConversationModel(); 
 		        String fileDataString = ConversationModel.fileToString(file);
-		        conversationModel.createConversationModelFromString(fileDataString);
-		        //TODO boradcast hacia el chat, para que todos tengan el nuevo modelo de conversación
+		        //conversationModel.createConversationModelFromString(fileDataString);
+		        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
 		        
-		        // Crear un mensaje nuevo con el sstring del modelo
-		        HashMap<String, String> properties= ((ChatTextInputPane) textInputPane).buildPropertyMap();
+		        // Crear un mensaje nuevo con el string del modelo
+		        HashMap<String, String> properties= new HashMap<String, String>();
 		        properties.put("configurationMessage", "true");
 		        this.chatroom.sendThreadedMessage(fileDataString, properties);
 				

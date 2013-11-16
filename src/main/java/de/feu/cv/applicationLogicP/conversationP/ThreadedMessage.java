@@ -114,13 +114,20 @@ public class ThreadedMessage implements Serializable, Comparable {
 	//evil hack for printing the IbisType and IbisRelation	 
 	//{-*-}
 	public String getText() {
-		String type = this.getMessageType();
-		String relation = this.getRelationType();
-		if (relation != null){
-			type += " (" + relation + ")";
+		//really evil hack for printing the text of a configuration message
+		if (this.configurationMessage.equals("false")){
+			String type = this.getMessageType();
+			String relation = this.getRelationType();
+			if (relation != null){
+				type += " (" + relation + ")";
+			}
+			type += "\r\n"; 
+			return type + text;	
 		}
-		type += "\r\n"; 
-		return type + text;
+		else{
+			return text;
+		}
+		
 	}
 
 	/**

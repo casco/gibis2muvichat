@@ -47,7 +47,14 @@ public class ThreadedMessage implements Serializable, Comparable {
 	private String relationType;	
 	
 	private String configurationMessage; // indica si es un mensaje de configuración
+	private String config_file;
 	
+	public String getConfig_file() {
+		return config_file;
+	}
+	public void setConfig_file(String config_file) {
+		this.config_file = config_file;
+	}
 	public String getConfigurationMessage() {
 		return configurationMessage;
 	}

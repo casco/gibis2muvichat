@@ -81,7 +81,12 @@ public class ConversationModel implements ConversationModel_Interface {
 	 * @return
 	 */
 	  public List<String> getReplyMessageTypes(String referencedType){
-		  return new ArrayList<String>(nodes.get(referencedType).keySet());
+		  //return new ArrayList<String>(nodes.get(referencedType).keySet());
+		  HashMap<String, ArrayList<String>> replies = nodes.get(referencedType);
+		  if (replies != null)
+			  return new ArrayList<String>(replies.keySet());
+		  else
+			  return new ArrayList<String>();		  
 	  }
 	  
 	  /**
@@ -90,8 +95,14 @@ public class ConversationModel implements ConversationModel_Interface {
 	   * @param destination
 	   * @return
 	   */
-	  public List<String> getReplyRelationTypes(String sourceMessageType, String destinationMessageType){
-		  return nodes.get(sourceMessageType).get(destinationMessageType);
+	  public List<String> getReplyRelationTypes(String destinationMessageType, String sourceMessageType){
+		  //return nodes.get(sourceMessageType).get(destinationMessageType);
+		  HashMap<String, ArrayList<String>> replies = nodes.get(destinationMessageType);
+		  if (replies != null){
+			  return replies.get(sourceMessageType);
+		  }
+		  else
+			  return new ArrayList<String>();
 	  }
 	  
 	  

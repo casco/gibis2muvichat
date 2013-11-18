@@ -1,7 +1,9 @@
 package de.feu.cv.applicationLogicP.conversationP;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -169,14 +171,24 @@ public class Conversation extends Observable implements Observer, Serializable {
 			// Verificar tipo de mensaje recibido
 			if (msg.getConfigurationMessage().equals("true")){
 				// si es un mensaje de configuración, se debe cambiar el modelo actual
-				this.conversationModel.createConversationModelFromString(msg.getText());				
+				String contents = msg.getText();
+				this.conversationModel.createConversationModelFromString(contents);				
 
 				String newConfigMessage= msg.getNick() + " ha cambiado el modelo de conversacion actual.";
 	    		JOptionPane.showMessageDialog(null, newConfigMessage);
+	    		//para forzar el rearmado de la lista de root types ante el cambio de configuracion
+				setSelection((ThreadedMessage)null);
 				
-				
-				//TODO generar y guardar el archivo de configuración
-				
+				//generación y guardado del archivo de configuración
+				String filename = CONVERSATION_MODEL_DIR + msg.getConfig_file();
+				File newFile = new File(filename);
+				if (! newFile.exists()){
+					try {						
+						PrintWriter pw = new PrintWriter(filename);
+						pw.println(contents);
+						pw.close();
+					} catch (FileNotFoundException e) {} 	
+				}
 			}
 			else{ // Mensaje normal (se debe mostrar) (código original)
 			

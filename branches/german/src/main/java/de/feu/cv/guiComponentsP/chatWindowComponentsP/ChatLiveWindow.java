@@ -190,8 +190,7 @@ public class ChatLiveWindow extends ChatWindow {
 	// actualiza el modelo de conversación en textInputPane a partir del archivo"file" 
 	protected void updateConversationModel(File file) {
 	    // leer contenido del archivo
-	    try {   // actualizar modelo de conversación de textInputPane
-		        ConversationModel conversationModel = chatroom.getConversation().getConversationModel(); 
+	    try {   // actualizar modelo de conversación de textInputPane		         
 		        String fileDataString = ConversationModel.fileToString(file);
 		        //conversationModel.createConversationModelFromString(fileDataString);
 		        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
@@ -199,10 +198,10 @@ public class ChatLiveWindow extends ChatWindow {
 		        // Crear un mensaje nuevo con el string del modelo
 		        HashMap<String, String> properties= new HashMap<String, String>();
 		        properties.put("configurationMessage", "true");
+		        properties.put("config_file", file.getName());
 		        this.chatroom.sendThreadedMessage(fileDataString, properties);
 				
-			} catch (FileNotFoundException e) {
-				//TODO si el archivo de configuración no existe, podría agregarse al directorio conversationModels
+			} catch (FileNotFoundException e) {				
 				e.printStackTrace();
 			} catch (IOException e) {				
 				e.printStackTrace();

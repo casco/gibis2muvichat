@@ -414,9 +414,7 @@ public abstract class ChatWindow extends JFrame {
             File file = fc.getSelectedFile();
             //This is where a real application would open the file.
             // Se debe cargar el modelo de conversación cambiando el actual.
-            // El nuevo modelo será enviado en forma de broadcast a todos los usuarios
-            //TODO quitar el print
-            System.out.println("Cargando y reconfigurando modelo de conversacion: " + file.getName() + "." );
+            // El nuevo modelo será enviado en forma de broadcast a todos los usuarios            
             /////////////////////////////////////////////////////////
             // actualizar modelo de conversación
             updateConversationModel(file);

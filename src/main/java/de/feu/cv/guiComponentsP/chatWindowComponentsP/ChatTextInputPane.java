@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import de.feu.cv.ConversationModelP.ConversationModel_Interface;
 import de.feu.cv.ConversationModelP.ConversationModel;
 import de.feu.cv.applicationLogicP.chatRoomP.ChatRoom;
+import de.feu.cv.applicationLogicP.conversationP.Conversation;
 import de.feu.cv.applicationLogicP.conversationP.ThreadedMessage;
 
 /**
@@ -113,25 +114,25 @@ public class ChatTextInputPane extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         //Something changed in teh conversation of my chatroom (possibly its selection ?
     	ThreadedMessage message = chatroom.getConversation().getSelection();
-        if (message != null) {
-        	//{-*-}
-        	
+        if (message != null) {        	
         	// Pedir al mensaje el Mtype
-        	//TODO - cambiar el nombre del m�todo en la clase thrededmessage
         	String parent_type = message.getMessageType();
         	// pedir los posibles mTypes a los que se puede llegar desde el mType actual        	
         	ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
         	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
-        	
-        	// Actualizar combo mType
-            typesCombo.removeAllItems();
-            for (String item : messageTypeStrings) {
-              typesCombo.addItem(item);
-            }
-            typesCombo.setSelectedIndex(0);          
-        }else{
-        	initializeComboRootsMTypes();
+        	if (! messageTypeStrings.isEmpty()){
+	        	// Actualizar combo mType
+	            typesCombo.removeAllItems();
+	            for (String item : messageTypeStrings) {
+	              typesCombo.addItem(item);
+	            }
+	            typesCombo.setSelectedIndex(0);     
+        	}
+        	else
+        		initializeComboRootsMTypes();
         }
+        else
+        	initializeComboRootsMTypes();
     }
 
 	private void initializeComboRootsMTypes() {
@@ -140,10 +141,11 @@ public class ChatTextInputPane extends JPanel implements Observer {
     	
     	// Actualizar combo mType
         typesCombo.removeAllItems();
+        relationsCombo.removeAllItems();
         for (String item : messageTypeStrings) {
           typesCombo.addItem(item);
         }
-        typesCombo.setSelectedIndex(0);
+        typesCombo.setSelectedIndex(0);        
 	}
 
 	/**
@@ -171,7 +173,15 @@ public class ChatTextInputPane extends JPanel implements Observer {
 
                                 //TODO Acá envía el mensaje!! Armo un diccionario con las propiedades adicionales.
                                 HashMap<String, String> properties = buildPropertyMap();
-
+                                Conversation conversation = chatroom.getConversation();
+                                ThreadedMessage parent = conversation.getSelection();
+                                if (parent != null){
+                                	String mType = parent.getMessageType();
+                                	ConversationModel cm = chatroom.getConversation().getConversationModel();
+                                	List<String> replies = cm.getReplyMessageTypes(mType);
+                                	if (replies.isEmpty())
+                                		conversation.setSelection((ThreadedMessage)null);
+                                }	
 								chatroom.sendThreadedMessage(text, properties);
 						    }
 						    // clear the input field

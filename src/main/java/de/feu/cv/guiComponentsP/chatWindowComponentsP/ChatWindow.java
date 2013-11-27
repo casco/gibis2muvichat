@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 
 import javax.swing.*;
 
+import de.feu.cv.ConversationModelP.ConversationModel;
 import de.feu.cv.applicationLogicP.MuViChatConstants;
 import de.feu.cv.applicationLogicP.Resources;
 import de.feu.cv.applicationLogicP.conversationP.Conversation;
@@ -50,6 +52,8 @@ public abstract class ChatWindow extends JFrame {
     private JMenuItem inspectorMenuItem = null;
 
     private JMenuItem conversationMenuItem = null;
+    
+    private JMenuItem resetConversationMenuItem = null;    
 
 	/**
 	 * The dialog for properties of current visualization.
@@ -349,6 +353,7 @@ public abstract class ChatWindow extends JFrame {
 			extrasMenu.add(getOptionsMenuItem());
             extrasMenu.add(getInspectorMenuItem());
             extrasMenu.add(getConversationTypeMenuItem());
+            extrasMenu.add(getResetConversationTypeMenuItem());
 		}
 		return extrasMenu;
 	}
@@ -406,7 +411,31 @@ public abstract class ChatWindow extends JFrame {
         }
         return conversationMenuItem;
     }
+    
+    
+    private JMenuItem getResetConversationTypeMenuItem() {
+        if (resetConversationMenuItem == null) {
+        	resetConversationMenuItem = new JMenuItem();
+        	resetConversationMenuItem.setText("Reset Conversation Model");
+        	resetConversationMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                	resetConversationModel();
+                }
+            });
+        }
+        return resetConversationMenuItem;
+    }
 
+    // resetar el modelo de conversación con un modelo por defecto
+    private void resetConversationModel(){
+    	// leer archivo por defecto
+    	// TODO deshardcodear
+    	File file= new File("conversationModels/default.cfg");
+    	// actualizar modelo de conversación
+    	updateConversationModel(file);
+    }
+    
+   // actualiza el modelo de conversación desde la selección de un archivo 
     private void setConversationType() {
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
@@ -418,9 +447,7 @@ public abstract class ChatWindow extends JFrame {
             /////////////////////////////////////////////////////////
             // actualizar modelo de conversación
             updateConversationModel(file);
-            
-            
-            
+  
         } else {
             System.out.println("Open command cancelled by user." );
         }
@@ -454,6 +481,14 @@ public abstract class ChatWindow extends JFrame {
         inspectorWindow.open();
 
     }
+
+	public JMenuItem getResetConversationMenuItem() {
+		return resetConversationMenuItem;
+	}
+
+	public void setResetConversationMenuItem(JMenuItem resetConversationMenuItem) {
+		this.resetConversationMenuItem = resetConversationMenuItem;
+	}
 
 
 

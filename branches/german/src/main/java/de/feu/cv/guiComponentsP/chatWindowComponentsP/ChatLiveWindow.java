@@ -187,18 +187,23 @@ public class ChatLiveWindow extends ChatWindow {
 	}
 
 
-	// actualiza el modelo de conversación en textInputPane a partir del archivo"file" 
+	// actualiza el modelo de conversación en textInputPane a partir del archivo "file" 
 	protected void updateConversationModel(File file) {
 	    // leer contenido del archivo
 	    try {   // actualizar modelo de conversación de textInputPane		         
 		        String fileDataString = ConversationModel.fileToString(file);
 		        //conversationModel.createConversationModelFromString(fileDataString);
-		        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
+		       
 		        
 		        // Crear un mensaje nuevo con el string del modelo
 		        HashMap<String, String> properties= new HashMap<String, String>();
 		        properties.put("configurationMessage", "true");
 		        properties.put("config_file", file.getName());
+		        
+		        // Verificar que el archivo tenga sintaxis válida
+		       // chatroom.getConversation().validateConversationModelFromString(fileDataString);
+		        
+		        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
 		        this.chatroom.sendThreadedMessage(fileDataString, properties);
 				
 			} catch (FileNotFoundException e) {				

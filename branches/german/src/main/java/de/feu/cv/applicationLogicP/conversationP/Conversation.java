@@ -175,6 +175,7 @@ public class Conversation extends Observable implements Observer, Serializable {
 				this.conversationModel.createConversationModelFromString(contents);				
 
 				String newConfigMessage= msg.getNick() + " ha cambiado el modelo de conversacion actual.";
+				//TODO quitar ventana de aquí y subirla a la interface
 	    		JOptionPane.showMessageDialog(null, newConfigMessage);
 	    		//para forzar el rearmado de la lista de root types ante el cambio de configuracion
 				setSelection((ThreadedMessage)null);

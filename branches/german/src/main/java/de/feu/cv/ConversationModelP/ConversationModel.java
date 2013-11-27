@@ -75,6 +75,66 @@ public class ConversationModel implements ConversationModel_Interface {
 		}			
 	}
 	
+	
+	public boolean validateConversationModelFromString(String str_model) {
+        boolean rta = true;
+		String[] str_model_aux = str_model.split("#\n");
+		if (str_model_aux.length == 2) {
+			String str_nodes = str_model_aux[0];
+			String[] str_arr_nodes = str_nodes.split("\n");
+			ArrayList<String> names = new ArrayList<String>();
+			for(String str_n : str_arr_nodes) {
+				String[] str_n_aux = str_n.split(" ");
+				if (str_n_aux.length>1) {
+					names.add(str_n_aux[1]);
+					if (str_n_aux.length==3) {
+						rootNodes.add(str_n_aux[1]);
+					}
+				} else rta = false;
+
+			}
+			
+			if (rta) {
+
+				String[] str_arr_relations = str_model_aux[1].split("\n");
+				HashMap<String, ArrayList<String>> destinos;
+				ArrayList<String> relaciones;
+				for(String str_r : str_arr_relations) {
+					String[] str_r_aux = str_r.split(" ");
+					if (str_r_aux.length==3) {
+						
+						int destino = Integer.parseInt(str_r_aux[0])-1;
+					    int origen = Integer.parseInt(str_r_aux[1])-1;
+					    
+					    if (destino < str_arr_nodes.length & origen < str_arr_nodes.length) {
+						    String relacion = str_r_aux[2];
+						    if (nodes.containsKey(names.get(origen))) {
+						    	destinos = nodes.get(names.get(origen));
+						    	if (destinos.containsKey(names.get(destino))) {
+						    		relaciones = destinos.get(names.get(destino));
+						    		relaciones.add(relacion);
+						    	} else {
+						    		relaciones = new ArrayList<String>();
+						    		relaciones.add(relacion);
+						    		destinos.put(names.get(destino), relaciones);
+						    	}
+						    		
+						    } else {
+						    	relaciones = new ArrayList<String>();
+						    	relaciones.add(relacion);
+						    	destinos = new HashMap<String, ArrayList<String>>();
+						    	destinos.put(names.get(destino), relaciones);
+						    	nodes.put(names.get(origen), destinos);
+						    	
+						    }
+					    } else rta = false;			
+					} else rta = false;		    
+				}
+			}
+		} else rta = false;
+		return rta;
+	}	
+		
 	/**
 	 * Devuelve los typos (sus nombres) que pueden actuar como respuesta al que se envia como parametro 
 	 * @param referencedType el tipo del mensaje seleccionado...

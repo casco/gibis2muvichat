@@ -201,10 +201,14 @@ public class ChatLiveWindow extends ChatWindow {
 		        properties.put("config_file", file.getName());
 		        
 		        // Verificar que el archivo tenga sintaxis válida
-		       // chatroom.getConversation().validateConversationModelFromString(fileDataString);
-		        
-		        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
-		        this.chatroom.sendThreadedMessage(fileDataString, properties);
+		        if (chatroom.getConversation().getConversationModel().validateConversationModelFromString(fileDataString)) {
+			        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
+			        this.chatroom.sendThreadedMessage(fileDataString, properties);		        	
+		        }
+		        else{
+		        	JOptionPane.showMessageDialog(null, "Sintaxis de archivo no valida");
+		        }
+
 				
 			} catch (FileNotFoundException e) {				
 				e.printStackTrace();

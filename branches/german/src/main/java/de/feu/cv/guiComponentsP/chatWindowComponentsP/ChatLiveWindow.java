@@ -203,7 +203,11 @@ public class ChatLiveWindow extends ChatWindow {
 		        // Verificar que el archivo tenga sintaxis válida
 		        if (chatroom.getConversation().getConversationModel().validateConversationModelFromString(fileDataString)) {
 			        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
-			        this.chatroom.sendThreadedMessage(fileDataString, properties);		        	
+			        this.chatroom.sendThreadedMessage(fileDataString, properties);
+			        // Se envía mensaje de aviso
+			        //TODO quizá se podría mejorar la forma de informe
+			        properties.put("configurationMessage", "false");
+			        this.chatroom.sendThreadedMessage("-----> Cambió el modelo de Conversación", properties);
 		        }
 		        else{
 		        	JOptionPane.showMessageDialog(null, "Sintaxis de archivo no valida");

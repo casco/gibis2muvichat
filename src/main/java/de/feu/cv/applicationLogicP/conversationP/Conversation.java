@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -171,25 +172,27 @@ public class Conversation extends Observable implements Observer, Serializable {
 			// Verificar tipo de mensaje recibido
 			if (msg.getConfigurationMessage().equals("true")){
 				// si es un mensaje de configuración, se debe cambiar el modelo actual
-				String contents = msg.getText();
-				this.conversationModel.createConversationModelFromString(contents);				
-
-				String newConfigMessage= msg.getNick() + " ha cambiado el modelo de conversacion actual.";
-				//TODO quitar ventana de aquí y subirla a la interface
-	    		JOptionPane.showMessageDialog(null, newConfigMessage);
-	    		//para forzar el rearmado de la lista de root types ante el cambio de configuracion
-				setSelection((ThreadedMessage)null);
 				
-				//generación y guardado del archivo de configuración
-				String filename = CONVERSATION_MODEL_DIR + msg.getConfig_file();
-				File newFile = new File(filename);
-				if (! newFile.exists()){
-					try {						
-						PrintWriter pw = new PrintWriter(filename);
-						pw.println(contents);
-						pw.close();
-					} catch (FileNotFoundException e) {} 	
-				}
+					String contents = msg.getText();
+					this.conversationModel.createConversationModelFromString(contents);				
+	
+					//String newConfigMessage= msg.getNick() + " ha cambiado el modelo de conversacion actual.";
+					//TODO quitar ventana de aquí y subirla a la interface
+		    		//JOptionPane.showMessageDialog(null, newConfigMessage);
+		    		//para forzar el rearmado de la lista de root types ante el cambio de configuracion
+					setSelection((ThreadedMessage)null);
+					
+					//generación y guardado del archivo de configuración
+					String filename = CONVERSATION_MODEL_DIR + msg.getConfig_file();
+					File newFile = new File(filename);
+					if (! newFile.exists()){
+						try {						
+							PrintWriter pw = new PrintWriter(filename);
+							pw.println(contents);
+							pw.close();
+						} catch (FileNotFoundException e) {} 	
+					}
+
 			}
 			else{ // Mensaje normal (se debe mostrar) (código original)
 			

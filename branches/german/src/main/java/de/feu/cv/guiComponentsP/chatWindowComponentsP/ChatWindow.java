@@ -426,26 +426,26 @@ public abstract class ChatWindow extends JFrame {
         return resetConversationMenuItem;
     }
 
-    // resetar el modelo de conversación con un modelo por defecto
+    // resetar el modelo de conversaciï¿½n con un modelo por defecto
     private void resetConversationModel(){
     	// leer archivo por defecto
     	// TODO deshardcodear
     	File file= new File("conversationModels/default.cfg");
-    	// actualizar modelo de conversación
+    	// actualizar modelo de conversaciï¿½n
     	updateConversationModel(file);
     }
     
-   // actualiza el modelo de conversación desde la selección de un archivo 
+   // actualiza el modelo de conversaciï¿½n desde la selecciï¿½n de un archivo 
     private void setConversationType() {
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             //This is where a real application would open the file.
-            // Se debe cargar el modelo de conversación cambiando el actual.
-            // El nuevo modelo será enviado en forma de broadcast a todos los usuarios            
+            // Se debe cargar el modelo de conversaciï¿½n cambiando el actual.
+            // El nuevo modelo serï¿½ enviado en forma de broadcast a todos los usuarios            
             /////////////////////////////////////////////////////////
-            // actualizar modelo de conversación
+            // actualizar modelo de conversaciï¿½n
             updateConversationModel(file);
   
         } else {
@@ -454,10 +454,10 @@ public abstract class ChatWindow extends JFrame {
 
     }
 
-    // Método abstracto vacío
-    // Deberían implementarlo las subclases
+    // Mï¿½todo abstracto vacio
+    // Deberï¿½an implementarlo las subclases
     protected void updateConversationModel(File file) {
-		// método abstracto vacío
+		// mï¿½todo abstracto vacio
     	System.out.println("WARNING:  updateCOnversationModel de la clase ChatWindow (Abstracta) !" );
 	}
 

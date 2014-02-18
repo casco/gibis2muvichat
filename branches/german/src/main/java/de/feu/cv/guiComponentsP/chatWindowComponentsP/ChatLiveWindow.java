@@ -187,10 +187,10 @@ public class ChatLiveWindow extends ChatWindow {
 	}
 
 
-	// actualiza el modelo de conversación en textInputPane a partir del archivo "file" 
+	// actualiza el modelo de conversaciï¿½n en textInputPane a partir del archivo "file" 
 	protected void updateConversationModel(File file) {
 	    // leer contenido del archivo
-	    try {   // actualizar modelo de conversación de textInputPane		         
+	    try {   // actualizar modelo de conversaciï¿½n de textInputPane		         
 		        String fileDataString = ConversationModel.fileToString(file);
 		        //conversationModel.createConversationModelFromString(fileDataString);
 		       
@@ -200,14 +200,14 @@ public class ChatLiveWindow extends ChatWindow {
 		        properties.put("configurationMessage", "true");
 		        properties.put("config_file", file.getName());
 		        
-		        // Verificar que el archivo tenga sintaxis válida
+		        // Verificar que el archivo tenga sintaxis vï¿½lida
 		        if (chatroom.getConversation().getConversationModel().validateConversationModelFromString(fileDataString)) {
-			        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversación
+			        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversaciï¿½n
 			        this.chatroom.sendThreadedMessage(fileDataString, properties);
-			        // Se envía mensaje de aviso
-			        //TODO quizá se podría mejorar la forma de informe
+			        // Se envï¿½a mensaje de aviso
+			        //TODO quizï¿½ se podrï¿½a mejorar la forma de informe
 			        properties.put("configurationMessage", "false");
-			        this.chatroom.sendThreadedMessage("-----> Cambió el modelo de Conversación", properties);
+			        this.chatroom.sendThreadedMessage("-----> Cambio el modelo de Conversacion", properties);
 		        }
 		        else{
 		        	JOptionPane.showMessageDialog(null, "Sintaxis de archivo no valida");

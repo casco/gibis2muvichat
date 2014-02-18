@@ -62,37 +62,25 @@ public class ChatTextInputPane extends JPanel implements Observer {
 					// refrescar lista de relaciones
 					updateRelationList(mType, mType_parent);
 				}else{// no hay mensaje seleccionado
-					relationsCombo.removeAll();
+                    relationsCombo.setModel(new DefaultComboBoxModel());
 				}
 			}			
 		}		
 		
-		private void updateRelationList(String relation_type, String relation_parent_type){
-		
-			// Obtener todas las posibles relaciones entre un Mtype padre y el Mtype actual
-			ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
-			List<String> relations = conversationModel.getReplyRelationTypes(relation_parent_type, relation_type);
 
-            relationsCombo.setModel(new DefaultComboBoxModel(relations.toArray())) ;
-
-
-			// Iterar sobre las relaciones y agregarlas al combo		
-/*			relationsCombo.removeAllItems();
-			for (int i=0; i < relations.size(); i++){
-				relationsCombo.addItem(relations.get(i));
-			}*/
-
-
- /*           if (relationsCombo.getItemCount() == 0) {
-                relationsCombo.setVisible(false);
-            }  else {
-                relationsCombo.setVisible(true);
-            }*/
-
-
-		}
 	}
 	//{-*-}
+
+    private void updateRelationList(String relation_type, String relation_parent_type){
+
+        // Obtener todas las posibles relaciones entre un Mtype padre y el Mtype actual
+        ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
+        List<String> relations = conversationModel.getReplyRelationTypes(relation_parent_type, relation_type);
+
+        relationsCombo.setModel(new DefaultComboBoxModel(relations.toArray())) ;
+
+
+    }
 
 	/**
 	 * This method initializes this.
@@ -132,7 +120,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 	        	// Actualizar combo mType
                 typesCombo.setModel(new DefaultComboBoxModel(messageTypeStrings.toArray()));
 	            typesCombo.setSelectedIndex(0);
-                relationsCombo.setModel(new DefaultComboBoxModel());
+                updateRelationList((String )typesCombo.getSelectedItem(), parent_type);
         	}
         	else
         		initializeComboRootsMTypes();

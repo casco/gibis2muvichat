@@ -228,7 +228,7 @@ public class ChatConnectDialog extends JDialog {
 	private JScrollPane getJScrollPane() {
 		if (jScrollPane == null) {
 			jScrollPane = new JScrollPane();
-			jScrollPane.setViewportView(getServerroomList());
+			//jScrollPane.setViewportView(getServerroomList());
 		}
 		return jScrollPane;
 	}

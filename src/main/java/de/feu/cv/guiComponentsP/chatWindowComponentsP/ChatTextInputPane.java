@@ -1,6 +1,6 @@
 package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
@@ -10,11 +10,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import de.feu.cv.ConversationModelP.ConversationModel_Interface;
 import de.feu.cv.ConversationModelP.ConversationModel;
@@ -76,12 +72,24 @@ public class ChatTextInputPane extends JPanel implements Observer {
 			// Obtener todas las posibles relaciones entre un Mtype padre y el Mtype actual
 			ConversationModel conversationModel = chatroom.getConversation().getConversationModel();
 			List<String> relations = conversationModel.getReplyRelationTypes(relation_parent_type, relation_type);
-			
+
+            relationsCombo.setModel(new DefaultComboBoxModel(relations.toArray())) ;
+
+
 			// Iterar sobre las relaciones y agregarlas al combo		
-			relationsCombo.removeAllItems();
+/*			relationsCombo.removeAllItems();
 			for (int i=0; i < relations.size(); i++){
 				relationsCombo.addItem(relations.get(i));
-			}
+			}*/
+
+
+ /*           if (relationsCombo.getItemCount() == 0) {
+                relationsCombo.setVisible(false);
+            }  else {
+                relationsCombo.setVisible(true);
+            }*/
+
+
 		}
 	}
 	//{-*-}
@@ -97,7 +105,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
         typesCombo = new JComboBox<String>();
         relationsCombo = new JComboBox<String>();
         combosPanel.add(typesCombo, BorderLayout.NORTH);
-        combosPanel.add(relationsCombo, BorderLayout.SOUTH);
+        combosPanel.add(relationsCombo , BorderLayout.SOUTH);
         this.add(getChatTextArea(), BorderLayout.CENTER);
         this.add(combosPanel, BorderLayout.EAST);
         
@@ -122,11 +130,9 @@ public class ChatTextInputPane extends JPanel implements Observer {
         	List<String> messageTypeStrings = conversationModel.getReplyMessageTypes(parent_type);
         	if (! messageTypeStrings.isEmpty()){
 	        	// Actualizar combo mType
-	            typesCombo.removeAllItems();
-	            for (String item : messageTypeStrings) {
-	              typesCombo.addItem(item);
-	            }
-	            typesCombo.setSelectedIndex(0);     
+                typesCombo.setModel(new DefaultComboBoxModel(messageTypeStrings.toArray()));
+	            typesCombo.setSelectedIndex(0);
+                relationsCombo.setModel(new DefaultComboBoxModel());
         	}
         	else
         		initializeComboRootsMTypes();
@@ -140,12 +146,9 @@ public class ChatTextInputPane extends JPanel implements Observer {
 		List<String> messageTypeStrings = conversationModel.getRootMessageTypes();
     	
     	// Actualizar combo mType
-        typesCombo.removeAllItems();
-        relationsCombo.removeAllItems();
-        for (String item : messageTypeStrings) {
-          typesCombo.addItem(item);
-        }
-        typesCombo.setSelectedIndex(0);        
+        typesCombo.setModel(new DefaultComboBoxModel(messageTypeStrings.toArray()));
+        typesCombo.setSelectedIndex(0);
+        relationsCombo.setModel(new DefaultComboBoxModel());
 	}
 
 	/**
@@ -188,8 +191,7 @@ public class ChatTextInputPane extends JPanel implements Observer {
 							chatTextArea.setText("");
 
                            //TODO: Luego de enviar el mensaje, vacÃ­o el combo box.
-							initializeComboRootsMTypes();
-                           relationsCombo.removeAllItems();
+						   initializeComboRootsMTypes();
 
 					   } 
 				}
@@ -221,8 +223,8 @@ public class ChatTextInputPane extends JPanel implements Observer {
         if (relationsCombo.getSelectedItem() != null) {
             properties.put("rType", (String) relationsCombo.getSelectedItem());
         }
-        // propiedad de tipo de mensaje, para poder mandar un archivo de configuración
-        properties.put("configurationMessage", "false"); //por defecto nunca es un mensaje de configuración
+        // propiedad de tipo de mensaje, para poder mandar un archivo de configuraciï¿½n
+        properties.put("configurationMessage", "false"); //por defecto nunca es un mensaje de configuraciï¿½n
         
         return properties;  //To change body of created methods use File | Settings | File Templates.
     }

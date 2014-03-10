@@ -18,18 +18,22 @@ public class ConversationModel implements ConversationModel_Interface {
 
 	ArrayList<String> rootNodes;
 	HashMap<String, HashMap<String, ArrayList<String>>> nodes;
+    String configurationString;
+
 	
 	/**
 	 * 
 	 */
 	public ConversationModel(String str) {
 		super();
+        configurationString = str;
 		rootNodes = new ArrayList<String>();
 		nodes = new HashMap<String, HashMap<String, ArrayList<String>>>();
 		createConversationModelFromString(str);
 	}
 	
 	public void createConversationModelFromString(String str_model) {
+        configurationString = str_model;
 		nodes.clear();
 		rootNodes.clear();
 		String[] str_model_aux = str_model.split("#\n");
@@ -74,9 +78,12 @@ public class ConversationModel implements ConversationModel_Interface {
 		    	
 		}			
 	}
-	
-	
-	public boolean validateConversationModelFromString(String str_model) {
+
+    public String getConfigurationString() {
+        return configurationString;
+    }
+
+    public boolean validateConversationModelFromString(String str_model) {
         boolean rta = true;
 		String[] str_model_aux = str_model.split("#\n");
 		if (str_model_aux.length == 2) {
@@ -152,7 +159,6 @@ public class ConversationModel implements ConversationModel_Interface {
 	  /**
 	   * 
 	   * @param sourceMessageType
-	   * @param destination
 	   * @return
 	   */
 	  public List<String> getReplyRelationTypes(String destinationMessageType, String sourceMessageType){

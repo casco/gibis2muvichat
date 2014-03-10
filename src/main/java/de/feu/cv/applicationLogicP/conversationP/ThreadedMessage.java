@@ -46,15 +46,8 @@ public class ThreadedMessage implements Serializable, Comparable {
 	private String messageType;
 	private String relationType;	
 	
-	private String configurationMessage; // indica si es un mensaje de configuración
-	private String config_file;
-	
-	public String getConfig_file() {
-		return config_file;
-	}
-	public void setConfig_file(String config_file) {
-		this.config_file = config_file;
-	}
+	private String configurationMessage; // indica si es un mensaje de configuraciï¿½n
+
 	public String getConfigurationMessage() {
 		return configurationMessage;
 	}
@@ -117,23 +110,8 @@ public class ThreadedMessage implements Serializable, Comparable {
 	 * Gives the message text.
 	 * @return  the message text
 	 */
-	//{-*-}	
-	//evil hack for printing the IbisType and IbisRelation	 
-	//{-*-}
 	public String getText() {
-		//really evil hack for printing the text of a configuration message
-		if (this.configurationMessage.equals("false")){
-			String type = this.getMessageType();
-			String relation = this.getRelationType();
-			if (relation != null){
-				type += " (" + relation + ")";
-			}
-			type += "\r\n"; 
-			return type + text;	
-		}
-		else{
-			return text;
-		}
+        return text;
 		
 	}
 

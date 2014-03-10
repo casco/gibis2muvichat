@@ -52,6 +52,8 @@ public abstract class ChatWindow extends JFrame {
     private JMenuItem inspectorMenuItem = null;
 
     private JMenuItem conversationMenuItem = null;
+
+
     
     private JMenuItem resetConversationMenuItem = null;    
 
@@ -354,6 +356,7 @@ public abstract class ChatWindow extends JFrame {
             extrasMenu.add(getInspectorMenuItem());
             extrasMenu.add(getConversationTypeMenuItem());
             extrasMenu.add(getResetConversationTypeMenuItem());
+            extrasMenu.add(getShowOrBrowseConversationMenuItem());
 		}
 		return extrasMenu;
 	}
@@ -402,7 +405,7 @@ public abstract class ChatWindow extends JFrame {
     private JMenuItem getConversationTypeMenuItem() {
         if (conversationMenuItem == null) {
             conversationMenuItem = new JMenuItem();
-            conversationMenuItem.setText("Set conversation type");
+            conversationMenuItem.setText(Resources.getString("change_conversation_type"));
             conversationMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setConversationType();
@@ -411,12 +414,17 @@ public abstract class ChatWindow extends JFrame {
         }
         return conversationMenuItem;
     }
-    
-    
+
+
+    protected abstract JMenuItem getShowOrBrowseConversationMenuItem();
+
+
+
+
     private JMenuItem getResetConversationTypeMenuItem() {
         if (resetConversationMenuItem == null) {
         	resetConversationMenuItem = new JMenuItem();
-        	resetConversationMenuItem.setText("Reset Conversation Model");
+        	resetConversationMenuItem.setText(Resources.getString("reset_conversation_type"));
         	resetConversationMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                 	resetConversationModel();
@@ -435,17 +443,12 @@ public abstract class ChatWindow extends JFrame {
     	updateConversationModel(file);
     }
     
-   // actualiza el modelo de conversaci�n desde la selecci�n de un archivo 
+   // Update the conversation model configuration from a file
     private void setConversationType() {
         final JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            //This is where a real application would open the file.
-            // Se debe cargar el modelo de conversaci�n cambiando el actual.
-            // El nuevo modelo ser� enviado en forma de broadcast a todos los usuarios            
-            /////////////////////////////////////////////////////////
-            // actualizar modelo de conversaci�n
             updateConversationModel(file);
   
         } else {
@@ -454,12 +457,8 @@ public abstract class ChatWindow extends JFrame {
 
     }
 
-    // M�todo abstracto vacio
-    // Deber�an implementarlo las subclases
-    protected void updateConversationModel(File file) {
-		// m�todo abstracto vacio
-    	System.out.println("WARNING:  updateCOnversationModel de la clase ChatWindow (Abstracta) !" );
-	}
+
+    protected abstract void updateConversationModel(File file);
 
 	/**
 	 * Creates a new property dialog window or set the existing one visible.

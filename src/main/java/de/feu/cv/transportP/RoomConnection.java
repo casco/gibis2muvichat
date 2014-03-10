@@ -80,8 +80,6 @@ public class RoomConnection extends Observable{
 		        	threadedmessage.setMessageType(mtype);
 		        	threadedmessage.setRelationType(rType);
 		        	threadedmessage.setConfigurationMessage(configurationMessage);
-		        	if (configurationMessage.equals("true"))
-		        		threadedmessage.setConfig_file(config_file);
 		        	//{-*-}
 	        		setChanged();
 	        		notifyObservers(threadedmessage);	        		

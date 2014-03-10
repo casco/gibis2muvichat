@@ -29,7 +29,19 @@ public class ChatLabelRenderer extends LabelRenderer {
 	@Override
 	protected String getText(VisualItem item) {
         String s = "";
-        if ( item.canGetString("nick") ) {
+
+        if ((item.canGetString("mType")) && (item.getString("mType") != null)){
+            s = s + "-" +item.getString("mType");
+            if ((item.canGetString("rType")) && (item.getString("rType") != null)){
+                s = s + " (" +item.getString("rType") + ")";
+            }
+            s = s + "-\n";
+        }
+
+
+
+
+        if (( item.canGetString("nick") && (item.getString("nick") != null)) ) {
             s = s + item.getString("nick") + ":\n";   
         }
 

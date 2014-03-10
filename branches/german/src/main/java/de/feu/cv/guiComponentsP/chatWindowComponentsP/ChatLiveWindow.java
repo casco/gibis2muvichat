@@ -39,6 +39,10 @@ public class ChatLiveWindow extends ChatWindow {
 	private JMenu fileMenu = null;
 
 	private JMenuItem saveMenuItem = null;
+
+    private JMenuItem showOrBrowseConversationMenuItem = null;
+
+    protected ConversationModelEditorWindow conversationModelEditorWindow;
 	
 
 
@@ -76,8 +80,32 @@ public class ChatLiveWindow extends ChatWindow {
 		});
 	}
 
-	
-	/**
+    @Override
+    protected JMenuItem getShowOrBrowseConversationMenuItem() {
+
+            if (showOrBrowseConversationMenuItem == null) {
+                showOrBrowseConversationMenuItem = new JMenuItem();
+                showOrBrowseConversationMenuItem.setText(Resources.getString("edit_conversation_type"));
+                showOrBrowseConversationMenuItem.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        showEditConversationType();
+                    }
+                });
+            }
+            return showOrBrowseConversationMenuItem;
+    }
+
+    private void showEditConversationType() {
+
+        if (conversationModelEditorWindow == null)  {
+            conversationModelEditorWindow = new ConversationModelEditorWindow(this);
+        }
+        conversationModelEditorWindow.open();
+
+    }
+
+
+    /**
 	 * This method initializes participantPane.
 	 * 	
 	 * @return javax.swing.JScrollPane	
@@ -187,39 +215,38 @@ public class ChatLiveWindow extends ChatWindow {
 	}
 
 
-	// actualiza el modelo de conversaci�n en textInputPane a partir del archivo "file" 
 	protected void updateConversationModel(File file) {
-	    // leer contenido del archivo
-	    try {   // actualizar modelo de conversaci�n de textInputPane		         
-		        String fileDataString = ConversationModel.fileToString(file);
-		        //conversationModel.createConversationModelFromString(fileDataString);
-		       
-		        
-		        // Crear un mensaje nuevo con el string del modelo
-		        HashMap<String, String> properties= new HashMap<String, String>();
-		        properties.put("configurationMessage", "true");
-		        properties.put("config_file", file.getName());
-		        
-		        // Verificar que el archivo tenga sintaxis v�lida
-		        if (chatroom.getConversation().getConversationModel().validateConversationModelFromString(fileDataString)) {
-			        //TODO broadcast hacia el chat, para que todos tengan el nuevo modelo de conversaci�n
-			        this.chatroom.sendThreadedMessage(fileDataString, properties);
-			        // Se env�a mensaje de aviso
-			        //TODO quiz� se podr�a mejorar la forma de informe
-			        properties.put("configurationMessage", "false");
-			        this.chatroom.sendThreadedMessage("-----> Cambio el modelo de Conversacion", properties);
-		        }
-		        else{
-		        	JOptionPane.showMessageDialog(null, "Sintaxis de archivo no valida");
-		        }
 
-				
-			} catch (FileNotFoundException e) {				
+	    try {
+		        String configurationString = ConversationModel.fileToString(file);   // Not a proble of the configuration model.
+
+            updateConversationModel(configurationString);
+
+
+        } catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {				
 				e.printStackTrace();
 			}
 		}
-	
 
-}  
+    protected void updateConversationModel(String configurationString) {
+        // Create a message to broadcast the new configuration
+        HashMap<String, String> properties= new HashMap<String, String>();
+        properties.put("configurationMessage", "true");
+
+        // Verify that the configuration is valid
+        if (chatroom.getConversation().getConversationModel().validateConversationModelFromString(configurationString)) {
+            //broadcast to all users. I'll change my configuration when I receive the message.
+            this.chatroom.sendThreadedMessage(configurationString, properties);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, Resources.getString("syntax_not_valid"));
+        }
+    }
+
+
+    public ChatRoom getChatroom() {
+        return chatroom;
+    }
+}

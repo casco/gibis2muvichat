@@ -1,9 +1,12 @@
 package de.feu.cv.guiComponentsP.chatWindowComponentsP;
 
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import de.feu.cv.applicationLogicP.Resources;
 import de.feu.cv.applicationLogicP.chatFileP.ChatFile;
 import de.feu.cv.applicationLogicP.conversationP.Conversation;
+
+import java.io.File;
 
 /**
  * Displays a saved chat conversation.
@@ -27,8 +30,9 @@ public class ChatReplayWindow extends ChatWindow {
 	 * The data model of the saved chat file.
 	 */
 	private Conversation conversation;
+    private JMenuItem showOrBrowseConversationMenuItem ;
 
-	/**
+    /**
 	 * This is the default constructor.
 	 * @param file the ChatFile object to display
 	 */
@@ -64,8 +68,24 @@ public class ChatReplayWindow extends ChatWindow {
 		});		
 	}
 
+    @Override
+    protected JMenuItem getShowOrBrowseConversationMenuItem() {
 
-	/**
+        if (showOrBrowseConversationMenuItem == null) {
+            showOrBrowseConversationMenuItem = new JMenuItem();
+            showOrBrowseConversationMenuItem.setText(Resources.getString("edit_conversation_type"));
+            showOrBrowseConversationMenuItem.setEnabled(false);
+        }
+        return showOrBrowseConversationMenuItem;
+    }
+
+    @Override
+    protected void updateConversationModel(File file) {
+        //Do nothing on replay.
+    }
+
+
+    /**
 	 * This method initializes jJMenuBar.	
 	 * 	
 	 * @return javax.swing.JMenuBar	

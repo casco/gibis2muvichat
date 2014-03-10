@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import javax.swing.JComponent;
 
+import de.feu.cv.guiComponentsP.prefuseP.controlP.ChatEdgeRenderer;
 import prefuse.Constants;
 import prefuse.Display;
 import prefuse.Visualization;
@@ -100,7 +101,11 @@ public abstract class ChatVisualizationPanePrefuse extends ChatVisualizationPane
 	/**
 	 * The chat label renderer.
 	 */
-	private ChatLabelRenderer lr; 
+	private ChatLabelRenderer lr;
+    /**
+     * The chat Edge renderer (makes sense for edged that have relation names).
+     */
+    private ChatEdgeRenderer er;
 	/**
 	 * Creates a new visualization pane. 
 	 * @param conversation the displayed conversation

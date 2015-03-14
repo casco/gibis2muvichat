@@ -165,12 +165,13 @@ public class Conversation extends Observable implements Observer, Serializable {
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update(Observable obs, final Object arg) {
-        //TODO: received new message. Draw it.
+        //TODO: Boorkmark - received new message. Draw it.
         if (obs instanceof RoomConnection && arg instanceof ThreadedMessage) {
             ThreadedMessage msg = (ThreadedMessage) arg;
 
             // If it was a configuration message, change the configuration and notify the user with a message
-            if (msg.getConfigurationMessage().equals("true")) {
+            //TODO: if this is a true or false, make it boolean!
+            if ("true".equals(msg.getConfigurationMessage())) {
 
                 String contents = msg.getText();
                 if (this.conversationModel.validateConversationModelFromString(contents)) {

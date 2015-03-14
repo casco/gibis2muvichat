@@ -122,9 +122,10 @@ public class VisualizationPane extends ChatVisualizationPane  {
 		// update the parents in the cell renderer and repaint
 		// message list
 		cellrenderer.setParents(conversation.getAncestors(tm));
-		Graphics g = messageList.getGraphics();
-		if (g != null) // active visualization
-			messageList.paint (g);
+        //TODO fix this... and get the highlight yo work again
+		//Graphics g = messageList.getGraphics();
+		//if (g != null) // active visualization
+		//	messageList.paint (g);
 		
 	}
 

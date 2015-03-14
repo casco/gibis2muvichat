@@ -4,11 +4,15 @@ public abstract class IbisType {
 
 	public static IbisType getIbisType(String type){
 		IbisType ibistype = null;
-		switch (type) {
-			case "Issue": ibistype = new IbisIssue(); break;
-			case "Position": ibistype = new IbisPosition(); break;
-			case "Argument": ibistype = new IbisArgument(); break;
-		}
+        if ("Issue".equals(type)) {
+            ibistype = new IbisIssue();
+        }
+        if ("Position".equals(type)) {
+            ibistype = new IbisPosition();
+        }
+        if ("Argument".equals(type)) {
+            ibistype = new IbisArgument();
+        }
 		return ibistype;
 	}	
 	

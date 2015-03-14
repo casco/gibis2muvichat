@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
@@ -13,7 +15,7 @@ import javax.swing.JList;
  * @author Verena Kunz
  *
  */
-public class VisualizationPaneRenderer extends DefaultListCellRenderer {
+public class VisualizationPaneRenderer extends DefaultListCellRenderer  {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList parents ;
@@ -22,6 +24,8 @@ public class VisualizationPaneRenderer extends DefaultListCellRenderer {
 	private Font ancestorsfont;
 	private Color selectionbgcolor;
 	private Color selectionfontcolor;
+
+    private Observable observableHelper;
 	
 	  
 	/**
@@ -29,7 +33,8 @@ public class VisualizationPaneRenderer extends DefaultListCellRenderer {
 	 */
 	public VisualizationPaneRenderer() {
 			parents = new ArrayList();
-		}
+            observableHelper = new Observable();
+	}
 
 
 	/** 
@@ -110,5 +115,9 @@ public class VisualizationPaneRenderer extends DefaultListCellRenderer {
 	public void setSelectionFontColor(Color selectionfontcolor) {
 		this.selectionfontcolor = selectionfontcolor;
 	}
-	
+
+    public void addObserver(CellRenderObservingJList cellRenderObservingJList) {
+        observableHelper.addObserver(cellRenderObservingJList);
+    }
+
 }

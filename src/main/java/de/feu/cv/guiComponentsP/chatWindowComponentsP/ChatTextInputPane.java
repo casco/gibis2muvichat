@@ -29,8 +29,8 @@ public class ChatTextInputPane extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	private JTextArea chatTextArea = null;
 
-    private JComboBox<String> typesCombo = null;
-    private JComboBox<String> relationsCombo = null;
+    private JComboBox typesCombo = null;
+    private JComboBox relationsCombo = null;
     
 
 	/**
@@ -90,8 +90,8 @@ public class ChatTextInputPane extends JPanel implements Observer {
 		//this.setViewportView(getChatTextArea());
         JPanel combosPanel = new JPanel(new BorderLayout());
         this.setLayout(new BorderLayout());
-        typesCombo = new JComboBox<String>();
-        relationsCombo = new JComboBox<String>();
+        typesCombo = new JComboBox();
+        relationsCombo = new JComboBox();
         combosPanel.add(typesCombo, BorderLayout.NORTH);
         combosPanel.add(relationsCombo , BorderLayout.SOUTH);
         this.add(getChatTextArea(), BorderLayout.CENTER);
@@ -106,7 +106,6 @@ public class ChatTextInputPane extends JPanel implements Observer {
         //{-*-}
 	}
 
-    @Override
     public void update(Observable o, Object arg) {
         //Something changed in teh conversation of my chatroom (possibly its selection ?
     	ThreadedMessage message = chatroom.getConversation().getSelection();

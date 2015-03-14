@@ -432,7 +432,8 @@ public class PropertyContentPane extends PropertyContentPanel {
 	 */    
 	private JComboBox getFormatAncestorsComboBox() {
 		if (formatAncestorsComboBox == null) {
-			String[] values = {Resources.getString("element_plain"),Resources.getString("element_bold"),Resources.getString("element_italic")};
+			String[] values = {Resources.getString("element_plain"),Resources.getString("element_bold")
+                    ,Resources.getString("element_italic")};
 			formatAncestorsComboBox = new JComboBox(values);
 			formatAncestorsComboBox.setSelectedIndex(Integer.parseInt(visualProperties.getProperty("format_ancestors")));
 			formatAncestorsComboBox.addActionListener(new java.awt.event.ActionListener() {

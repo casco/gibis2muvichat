@@ -119,13 +119,10 @@ public class VisualizationPane extends ChatVisualizationPane  {
 	 * @param tm the message
 	 */
 	private void highlightParents(ThreadedMessage tm){
-		// update the parents in the cell renderer and repaint
-		// message list
+		// update the parents in the cell renderer
+		// the message list will repaint on its own
+
 		cellrenderer.setParents(conversation.getAncestors(tm));
-        //TODO fix this... and get the highlight yo work again
-		//Graphics g = messageList.getGraphics();
-		//if (g != null) // active visualization
-		//	messageList.paint (g);
 		
 	}
 
